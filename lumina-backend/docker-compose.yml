@@ -1,5 +1,14 @@
 services:
   # The API Gateway - The only service exposed to the outside world
+  frontend-nginx:
+    build:
+      context: ../lumina-frontend-async
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Expose port 80 on your machine to port 80 in the container
+    depends_on:
+      - api-service
+
   postgres:
     image: postgres:15-alpine
     environment:
@@ -21,8 +30,8 @@ services:
     build: 
       context: .
       dockerfile: ./api_service/Dockerfile
-    ports:
-      - "8000:8000" # Expose port 8000 on your machine to port 8000 in the container
+    # ports:
+    #   - "8000:8000" # Expose port 8000 on your machine to port 8000 in the container
     volumes:
       - ./shared:/app/shared # Shared code between services
       - ./api_service:/app # Mount local code for live reloading
