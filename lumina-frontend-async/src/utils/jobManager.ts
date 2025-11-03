@@ -37,7 +37,7 @@ export class JobManager {
   constructor(jobId: string, options: JobManagerOptions = {}) {
     this.jobId = jobId;
     this.options = {
-      pollInterval: 2000, // Poll every 2 seconds as fallback
+      pollInterval: 5000, // Poll every 5 seconds as fallback
       ...options,
     };
   }

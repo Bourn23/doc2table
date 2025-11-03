@@ -705,8 +705,10 @@ async def do_dynamic_extraction_work(
                     # Store based on count
                     if len(values_list) == 1:
                         record.data[safe_field_name] = values_list[0]  # ← Single string
-                    else:
+                    elif len(values_list) > 1:
                         record.data[safe_field_name] = values_list      # ← Array
+                    else:
+                        record.data[safe_field_name] = None              # ← No value found
                 
                     
                     flag_modified(record, "data")

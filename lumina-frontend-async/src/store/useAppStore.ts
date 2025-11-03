@@ -539,23 +539,48 @@ export const useAppStore = create<AppState>((set, get) => ({
         });
 
         // Re-run the original query to get the answer
-        console.log('🔄 Re-running query to get final answer...');
-        await get().fetchExtractedData(); // Refresh data before querying
-        
+        console.log('✅ Dynamic extraction completed:', jobResult);
+
+        // Update extracted data with new column
+        if (jobResult.new_records && jobResult.new_field) {
+          console.log('🧬 Updating state directly with new column data.');
+          get().updateExtractedData(jobResult.new_records, jobResult.new_field);
+        } else {
+          console.warn('⚠️ Job completed but new_records not provided. Falling back to fetch.');
+          await get().fetchExtractedData();
+        }
+
+        // Clear job tracking
         set({
-          currentResult: {
-            query: queryText,
-            // Use the final message from the job result
-            answer: jobResult.message || `I've successfully added the new column. The data grid is now updated.`,
-            confidence: 1,
-            sources: [],
-            relevantRecords: [],
-            result_type: 'function', // The function is now complete
-            function_result: {
-              ...(jobResult || {}),
-              success: true 
-            }, 
-          },
+          currentJobId: null,
+          currentJobService: null,
+          jobStatus: null,
+          jobMessage: null,
+        });
+
+        // Re-run the original query to get the answer
+        console.log('🔄 Re-running query to get final answer...');
+        // await get().fetchExtractedData(); // Refresh data before querying
+        const finalResult = await api.queryData(sessionId, queryText, 5);
+        console.log('📬 Received FINAL result from backend:', finalResult);
+        
+        const queryResult: QueryResult = {
+          // Use 'finalResult' which we just got from the second query
+          query: finalResult.query,
+          answer: finalResult.answer,
+          confidence: finalResult.confidence,
+          sources: finalResult.sources,
+          relevantRecords: finalResult.relevant_records.map(r => ({
+            text: r.text,
+            relevanceScore: r.relevanceScore,
+            chunkId: r.chunkId
+          })),
+          result_type: finalResult.result_type,
+          function_result: finalResult.function_result,
+        };
+
+        set({
+          currentResult: queryResult,
           phase: AppPhase.INSIGHT,
           currentQuery: { ...query, status: 'complete' },
         });
@@ -568,6 +593,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         return;
       }
+
 
       // Handle regular query result
       if (
