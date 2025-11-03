@@ -22,7 +22,7 @@ RUN npm run build
 FROM nginx:1.27-alpine
 
 # Copy the static build files from the 'build' stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # We will add a custom Nginx configuration file next
 # For now, remove the default Nginx config
