@@ -1,6 +1,6 @@
 import { JobStatus, JobUpdate } from '../types';
 // write a line to import API_BASE_URL from './api';
-import { API_BASE_URL } from './api';
+import API_BASE_URL from './api';
 
 const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000';
 

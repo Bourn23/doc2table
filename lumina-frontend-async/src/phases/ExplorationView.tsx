@@ -9,7 +9,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { GraphVisualization } from '../components/GraphVisualization';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { API_BASE_URL } from '../utils/api';
+import API_BASE_URL from '../utils/api';
 
 /**
  * ExplorationView - Hermes Mode
