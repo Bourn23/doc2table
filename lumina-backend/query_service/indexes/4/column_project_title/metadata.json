@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Project Title':\n\n- Record ID 0: Application of AI in Engineering and Science\n- Record ID 1: Large-Scale Social Media Simulation using LLMs\n- Record ID 2: Embodied Gaming AI Agent\n- Record ID 3: Multi-Agent Fleet Management\n- Record ID 4: Kaggle Sticker Sales Forecasting\n- Record ID 5: AI-Powered Automated Trading System",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "project_title"
+  }
+]

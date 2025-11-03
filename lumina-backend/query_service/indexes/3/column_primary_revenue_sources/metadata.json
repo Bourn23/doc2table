@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Primary Revenue Sources':\n\n- Record ID 0: ['sponsorship', 'VIP ticket sales', 'Grants', 'Retail store']",
+    "session_id": 3,
+    "index_type": "column_wise",
+    "column_name": "primary_revenue_sources"
+  }
+]

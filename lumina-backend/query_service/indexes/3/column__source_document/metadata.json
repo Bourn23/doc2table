@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column ' Source Document':\n\n- Record ID 0: 22_Multiagent_Simulators_for_S.pdf\n- Record ID 1: Contursi et al. - 1998 - A Multiple-Damage Location Assurance Criterion Based on Natural Frequency Changes.pdf\n- Record ID 2: DebRoy - Metallurgy, mechanistic models and machine learnin.pdf\n- Record ID 3: Friswell and Mottershead - 2001 - Inverse Methods in Structural Health Monitoring.pdf\n- Record ID 4: Gullichsen - Simulation of social media networks with agent-bas.pdf\n- Record ID 5: Ruiz et al. - 2017 - Eigenvector sensitivity when tracking modes with r.pdf\n- Record ID 6: Ury et al. - 2024 - Automated path planning for functionally graded ma.pdf",
+    "session_id": 3,
+    "index_type": "column_wise",
+    "column_name": "_source_document"
+  }
+]

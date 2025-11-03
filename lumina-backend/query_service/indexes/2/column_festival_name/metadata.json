@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Festival Name':\n\n- Record ID 0: DSM Book Festival",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "festival_name"
+  }
+]

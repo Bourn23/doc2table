@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publications':\n\n- Record ID 0: [{'title': 'Damage localization using differentiable physics and displacement-based structural identification', 'venue': 'Structures, Elsevier, Volume 71, 7 January 2025, 108142', 'authors': None}, {'title': 'Displacement-based structural identification using differentiable physics', 'venue': 'Engineering Structures, Elsevier, Volume 293, 15 October 2023, 116632', 'authors': None}, {'title': 'Towards damage detection using physics-based modeling and data-driven optimization', 'venue': 'Sensors and Smart Structures Technologies for Civil, Mechanical, and Aerospace Systems, vol. 12046, pp. 348-354. SPIE, 2022.', 'authors': None}, {'title': 'A Task-Aware Network for Multi-task Learning', 'venue': 'International Conference on Urban Intelligence and Applications, pp. 47-58. Springer, Singapore, 2020.', 'authors': None}]\n- Record ID 1: [{'title': 'Differentiable Path Planning for Material Design', 'venue': 'Under Preparation', 'authors': None}, {'title': 'Damage localization using differentiable physics and displacement-based structural identification', 'venue': 'Structures, Elsevier, Volume 71, 7 January 2025, 108142', 'authors': None}, {'title': 'Displacement-based structural identification using differentiable physics', 'venue': 'Engineering Structures, Elsevier, Volume 293, 15 October 2023, 116632', 'authors': None}, {'title': 'Towards damage detection using physics-based modeling and data-driven optimization', 'venue': 'Sensors and Smart Structures Technologies for Civil, Mechanical, and Aerospace Systems, vol. 12046, pp. 348-354. SPIE, 2022.', 'authors': None}, {'title': 'A Task-Aware Network for Multi-task Learning', 'venue': 'International Conference on Urban Intelligence and Applications, pp. 47-58. Springer, Singapore, 2020.', 'authors': None}]",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "publications"
+  }
+]

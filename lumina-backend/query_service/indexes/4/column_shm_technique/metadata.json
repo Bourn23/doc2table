@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Shm Technique':\n\n- Record ID 0: intelligent computational tools for damage detection and identification\n- Record ID 1: Vibration-based inverse methods using optimization algorithms and ANN\n- Record ID 2: Sunflower Optimization (SFO) algorithm applied to damage identification\n- Record ID 3: Sensor placement optimization using Genetic Algorithms (GAs)\n- Record ID 4: inverse method for delamination identification using modal data\n- Record ID 5: Structural identification\n- Record ID 6: Optimal sensor placement based on effective independence method and three-dimensional redundancy elimination model\n- Record ID 7: Reduced mode shapes and GA-ANN methods\n- Record ID 8: frequency-based vibration monitoring\n- Record ID 9: Vibration-based delamination detection\n- Record ID 10: multiobjective genetic algorithm, neural network and fuzzy decision making\n- Record ID 11: machine learning and pattern recognition for data-driven damage identification\n- Record ID 12: damage detection\n- Record ID 13: Inverse algorithm based on strain fields combined with DIC, numerical modeling and sunflower optimization (SFO)",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "shm_technique"
+  }
+]

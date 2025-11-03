@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Competitions':\n\n- Record ID 0: [{'name': 'Kaggle Sticker Sales Forecasting', 'rank': 5, 'year': 2025}, {'name': 'IEEEXtreme 11.0', 'rank': 3, 'year': 0}]",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "competitions"
+  }
+]

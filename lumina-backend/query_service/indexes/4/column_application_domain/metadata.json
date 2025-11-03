@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Application Domain':\n\n- Record ID 0: ['composites']\n- Record ID 1: ['mechanical structures', 'engineering']\n- Record ID 2: ['composite laminated plates', 'structural dynamic behavior analysis']\n- Record ID 3: ['laminated composite plates', 'shell structure', 'aeronautical industry']\n- Record ID 4: ['aeronautical CFRP plates', 'composite materials', 'aeronautical industry']\n- Record ID 5: ['civil infrastructure']\n- Record ID 6: ['spatial lattice structures', 'engineering']\n- Record ID 7: ['CFRP plates']\n- Record ID 8: ['FRP composites', 'aerospace industry', 'composite structures']\n- Record ID 9: ['curved composite plates']\n- Record ID 10: ['damage detection', 'structural health monitoring']\n- Record ID 11: ['plate-like structures', 'aircraft stabilizer wing', 'infrastructure', 'aerospace health monitoring', 'smart cities', 'smart infrastructure monitoring']\n- Record ID 12: ['composites']\n- Record ID 13: ['composite plate structures', 'CFRP laminated plates', 'mechanical structures']",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "application_domain"
+  }
+]

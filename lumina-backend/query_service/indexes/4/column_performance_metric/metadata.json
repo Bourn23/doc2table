@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Performance Metric':\n\n- Record ID 0: damage detection and identification\n- Record ID 1: Damage Detection and Identification\n- Record ID 2: objective function minimization for damage detection\n- Record ID 3: efficiency of sensor delivery methods\n- Record ID 4: reduction of initial search area\n- Record ID 5: structural performance prediction and reserve capacity evaluation\n- Record ID 6: optimal sensor placement performance and elimination in redundancy\n- Record ID 7: damage identification\n- Record ID 8: delamination identification\n- Record ID 9: detection accuracy\n- Record ID 10: robust optimization\n- Record ID 11: robustness with respect to harvested energy variations\n- Record ID 12: detection accuracy\n- Record ID 13: efficiency in determining location and dimension of structural damages",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "performance_metric"
+  }
+]

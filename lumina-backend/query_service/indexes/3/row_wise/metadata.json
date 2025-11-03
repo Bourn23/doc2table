@@ -1,0 +1,51 @@
+[
+  {
+    "id": 0,
+    "text": "Record ID: 0\n- Document Type: review article\n- Simulation Type: agent-based modeling\n- Model Subject: social network simulations for online safety and information propagation\n- Key Parameters: ['agent interaction rules', 'user behavior approximation', 'information propagation dynamics', 'algorithmic effects', 'policy intervention effects', 'user experience', 'security vulnerabilities', 'social bot detection', 'polarization mitigation', 'computational power', 'data limitations', 'LLM integration']\n-  Source Document: 22_Multiagent_Simulators_for_S.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 0
+  },
+  {
+    "id": 1,
+    "text": "Record ID: 1\n- Document Type: research paper\n- Simulation Type: finite element analysis\n- Model Subject: multiple damage site detection in elastic structures\n- Key Parameters: ['natural frequencies', 'stiffness reduction factor', 'percentage frequency changes', 'modal vectors', 'mass matrix', 'sensitivity matrix']\n-  Source Document: Contursi et al. - 1998 - A Multiple-Damage Location Assurance Criterion Based on Natural Frequency Changes.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 1
+  },
+  {
+    "id": 2,
+    "text": "Record ID: 2\n- Document Type: review article\n- Simulation Type: agent-based modeling, mechanistic models, machine learning\n- Model Subject: metal printing (additive manufacturing)\n- Key Parameters: ['heat source power', 'scanning speed', 'deposition rate', 'build size', 'feedstock diameter', 'dimensional accuracy', 'surface roughness', 'cooling rate', 'temperature gradient', 'solidification growth rate', 'preheat temperature', 'scanning pattern', 'powder feeding rate', 'laser power', 'hatch spacing', 'layer thickness', 'composition', 'microstructure', 'mechanical properties', 'defects (porosity, lack of fusion, cracking, distortion, residual stress, waviness)', 'ultrasonic methods', 'binder jetting and sintering']\n-  Source Document: DebRoy - Metallurgy, mechanistic models and machine learnin.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 2
+  },
+  {
+    "id": 3,
+    "text": "Record ID: 3\n- Document Type: research paper\n- Simulation Type: inverse methods\n- Model Subject: structural health monitoring\n- Key Parameters: None\n-  Source Document: Friswell and Mottershead - 2001 - Inverse Methods in Structural Health Monitoring.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 3
+  },
+  {
+    "id": 4,
+    "text": "Record ID: 4\n- Document Type: thesis\n- Simulation Type: agent-based modeling\n- Model Subject: social networks\n- Key Parameters: ['agent interaction rules', 'environment', 'time steps', 'network structure', 'rewiring probability', 'number of nodes']\n-  Source Document: Gullichsen - Simulation of social media networks with agent-bas.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 4
+  },
+  {
+    "id": 5,
+    "text": "Record ID: 5\n- Document Type: research paper\n- Simulation Type: eigenvalue optimization\n- Model Subject: eigenvector sensitivity analysis for structural dynamics\n- Key Parameters: ['stiffness matrix (K)', 'mass matrix (M)', 'eigenvalue (λ)', 'eigenvector (U)', 'variable vector (x)', \"Young's modulus\", \"Poisson's ratio\", 'thickness', 'moment of inertia', 'structural density']\n-  Source Document: Ruiz et al. - 2017 - Eigenvector sensitivity when tracking modes with r.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 5
+  },
+  {
+    "id": 6,
+    "text": "Record ID: 6\n- Document Type: Full Length Article\n- Simulation Type: CALPHAD, robotic path planning, surrogate modeling\n- Model Subject: functionally graded materials (FGMs), Mo-Nb-Ta-Ti system phase stability and solidification behavior\n- Key Parameters: ['composition', 'temperature', 'cracking susceptibility', 'phase stability', 'solidification behavior', 'cost function', 'obstacle function', 'adaptive sampling', 'support vector machine (SVM)', 'radial basis function interpolation', 'Kou cracking index', 'improved CSC (iCSC)', 'simplified Rappaz-Drezet-Gramaud (sRDG) model', 'probabilistic road map (PRM)', 'rapidly-exploring random trees (RRT)', 'RRT*FN algorithm', 'pycalphad', 'pycalphad-scheil package', 'thermodynamic database', 'gamma (γ)', 'C parameter', 'alpha (α) weighting', 'root mean square error (RMSE)']\n-  Source Document: Ury et al. - 2024 - Automated path planning for functionally graded ma.pdf",
+    "session_id": 3,
+    "index_type": "row_wise",
+    "row_index": 6
+  }
+]

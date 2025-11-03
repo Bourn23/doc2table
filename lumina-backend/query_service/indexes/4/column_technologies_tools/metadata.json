@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Technologies Tools':\n\n- Record ID 0: ['Python', 'PyTorch', 'JAX', 'Gemini 2.5', 'LangChain', 'RAG']\n- Record ID 1: ['PyDantic', 'LangChain', 'GPT-4o', 'Gemini', 'MCP', 'NetworkX']\n- Record ID 2: ['Meta SAM2', 'Gemini VLM', 'Gemini 1.5 Flash']\n- Record ID 3: ['CNN']\n- Record ID 4: ['XGBoost', 'Transformers']\n- Record ID 5: ['Scrapy', 'Airflow', 'MongoDB', 'GCP', 'PPO', 'A2C']",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "technologies_tools"
+  }
+]

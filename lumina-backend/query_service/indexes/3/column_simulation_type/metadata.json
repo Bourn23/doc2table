@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Simulation Type':\n\n- Record ID 0: agent-based modeling\n- Record ID 1: finite element analysis\n- Record ID 2: agent-based modeling, mechanistic models, machine learning\n- Record ID 3: inverse methods\n- Record ID 4: agent-based modeling\n- Record ID 5: eigenvalue optimization\n- Record ID 6: CALPHAD, robotic path planning, surrogate modeling",
+    "session_id": 3,
+    "index_type": "column_wise",
+    "column_name": "simulation_type"
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Project Name':\n\n- Record ID 0: Application of AI in Engineering and Science (Agentic AI, LLM, Computer Vision)\n- Record ID 1: Large-Scale Social Media Simulation using LLMs (Prompt Engineering, AI Agent)\n- Record ID 2: Embodied Gaming AI Agent (Computer Vision, VLM, Agentic AI)\n- Record ID 3: Multi-Agent Fleet Management (Computer Vision, Agentic AI)\n- Record ID 4: Kaggle Sticker Sales Forecasting (Time Series) - Top 5% among 2,500+ teams\n- Record ID 5: AI-Powered Automated Trading System (Reinforcement Learning)",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "project_name"
+  }
+]

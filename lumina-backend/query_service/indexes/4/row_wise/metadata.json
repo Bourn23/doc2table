@@ -1,0 +1,100 @@
+[
+  {
+    "id": 0,
+    "text": "Record ID: 0\n- Shm Technique: intelligent computational tools for damage detection and identification\n- Application Domain: ['composites']\n- Performance Metric: damage detection and identification\n- Reported Performance Value: N/A\n- Research Paper Title: The use of intelligent computational tools for damage detection and identification with an emphasis on composites – A review\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 0
+  },
+  {
+    "id": 1,
+    "text": "Record ID: 1\n- Shm Technique: Vibration-based inverse methods using optimization algorithms and ANN\n- Application Domain: ['mechanical structures', 'engineering']\n- Performance Metric: Damage Detection and Identification\n- Reported Performance Value: Not explicitly stated, but emphasizes robustness and sensitivity of methodologies\n- Research Paper Title: A Review of Vibration Based Inverse Methods for Damage Detection and Identification in Mechanical Structures Using Optimization Algorithms and ANN\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 1
+  },
+  {
+    "id": 2,
+    "text": "Record ID: 2\n- Shm Technique: Sunflower Optimization (SFO) algorithm applied to damage identification\n- Application Domain: ['composite laminated plates', 'structural dynamic behavior analysis']\n- Performance Metric: objective function minimization for damage detection\n- Reported Performance Value: not specified\n- Research Paper Title: A sunflower optimization (SFO) algorithm applied to damage identification on laminated composite plates\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 2
+  },
+  {
+    "id": 3,
+    "text": "Record ID: 3\n- Shm Technique: Sensor placement optimization using Genetic Algorithms (GAs)\n- Application Domain: ['laminated composite plates', 'shell structure', 'aeronautical industry']\n- Performance Metric: efficiency of sensor delivery methods\n- Reported Performance Value: overall efficient\n- Research Paper Title: Sensor placement optimization applied to laminated composite plates under vibration\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 3
+  },
+  {
+    "id": 4,
+    "text": "Record ID: 4\n- Shm Technique: inverse method for delamination identification using modal data\n- Application Domain: ['aeronautical CFRP plates', 'composite materials', 'aeronautical industry']\n- Performance Metric: reduction of initial search area\n- Reported Performance Value: up to 96%\n- Research Paper Title: An estimate of the location of multiple delaminations on aeronautical CFRP plates using modal data inverse problem\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 4
+  },
+  {
+    "id": 5,
+    "text": "Record ID: 5\n- Shm Technique: Structural identification\n- Application Domain: ['civil infrastructure']\n- Performance Metric: structural performance prediction and reserve capacity evaluation\n- Reported Performance Value: accurate\n- Research Paper Title: Structural identification and evaluation for SHM applications\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 5
+  },
+  {
+    "id": 6,
+    "text": "Record ID: 6\n- Shm Technique: Optimal sensor placement based on effective independence method and three-dimensional redundancy elimination model\n- Application Domain: ['spatial lattice structures', 'engineering']\n- Performance Metric: optimal sensor placement performance and elimination in redundancy\n- Reported Performance Value: equal significance using weighting factors and normalization\n- Research Paper Title: Optimal sensor placement for spatial lattice structure based on three-dimensional redundancy elimination model\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 6
+  },
+  {
+    "id": 7,
+    "text": "Record ID: 7\n- Shm Technique: Reduced mode shapes and GA-ANN methods\n- Application Domain: ['CFRP plates']\n- Performance Metric: damage identification\n- Reported Performance Value: optimized\n- Research Paper Title: Optimized damage identification in CFRP plates by reduced mode shapes and GA-ANN methods\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 7
+  },
+  {
+    "id": 8,
+    "text": "Record ID: 8\n- Shm Technique: frequency-based vibration monitoring\n- Application Domain: ['FRP composites', 'aerospace industry', 'composite structures']\n- Performance Metric: delamination identification\n- Reported Performance Value: frequency shifts\n- Research Paper Title: Delamination Identification for FRP Composites with Emphasis on Frequency-Based Vibration Monitoring-A Review\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 8
+  },
+  {
+    "id": 9,
+    "text": "Record ID: 9\n- Shm Technique: Vibration-based delamination detection\n- Application Domain: ['curved composite plates']\n- Performance Metric: detection accuracy\n- Reported Performance Value: 96%\n- Research Paper Title: Vibration-based delamination detection in curved composite plates\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 9
+  },
+  {
+    "id": 10,
+    "text": "Record ID: 10\n- Shm Technique: multiobjective genetic algorithm, neural network and fuzzy decision making\n- Application Domain: ['damage detection', 'structural health monitoring']\n- Performance Metric: robust optimization\n- Reported Performance Value: optimum value and small var...\n- Research Paper Title: A robust optimization for damage detection using multiobjective genetic algorithm, neural network and fuzzy decision making\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 10
+  },
+  {
+    "id": 11,
+    "text": "Record ID: 11\n- Shm Technique: machine learning and pattern recognition for data-driven damage identification\n- Application Domain: ['plate-like structures', 'aircraft stabilizer wing', 'infrastructure', 'aerospace health monitoring', 'smart cities', 'smart infrastructure monitoring']\n- Performance Metric: robustness with respect to harvested energy variations\n- Reported Performance Value: efficient and robust for damage detection with incomplete and sparse/missing binary signals\n- Research Paper Title: Data interpretation framework integrating machine learning and pattern recognition for self-powered data-driven damage identification with harvested energy variations\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 11
+  },
+  {
+    "id": 12,
+    "text": "Record ID: 12\n- Shm Technique: damage detection\n- Application Domain: ['composites']\n- Performance Metric: detection accuracy\n- Reported Performance Value: various\n- Research Paper Title: Methods of damage detection on composites under low velocity impact: Review\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 12
+  },
+  {
+    "id": 13,
+    "text": "Record ID: 13\n- Shm Technique: Inverse algorithm based on strain fields combined with DIC, numerical modeling and sunflower optimization (SFO)\n- Application Domain: ['composite plate structures', 'CFRP laminated plates', 'mechanical structures']\n- Performance Metric: efficiency in determining location and dimension of structural damages\n- Reported Performance Value: excellent\n- Research Paper Title: Inverse structural damage identification problem in CFRP laminated plates using SFO algorithm based on strain fields\n-  Source Document: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "row_wise",
+    "row_index": 13
+  }
+]

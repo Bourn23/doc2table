@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Research Area':\n\n- Record ID 0: ['Generative AI', 'Machine Learning', 'Computer Vision', 'Time Series Forecasting', 'Agentic AI', 'LLM', 'Prompt Engineering', 'AI Agent', 'VLM', 'Reinforcement Learning', 'Physics-informed machine learning']",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "research_area"
+  }
+]

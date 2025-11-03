@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Revenue Diversification Strategies':\n\n- Record ID 0: ['VIP package sales', 'Sponsorships', 'Grants', 'Retail store sales', 'Donations', 'Crowd funding', 'Social content (e.g., sponsorship boxes with content)', 'Big Data (selling insights to sponsors)']",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "revenue_diversification_strategies"
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Research Experience Title':\n\n- Record ID 0: Research Assistant\n- Record ID 1: Research Assistant\n- Record ID 2: Research Assistant\n- Record ID 3: Research Assistant\n- Record ID 4: Research Assistant",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "research_experience_title"
+  }
+]

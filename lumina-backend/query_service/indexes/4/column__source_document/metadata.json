@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column ' Source Document':\n\n- Record ID 0: ResearchRabbit_Export_1758912827.csv\n- Record ID 1: ResearchRabbit_Export_1758912827.csv\n- Record ID 2: ResearchRabbit_Export_1758912827.csv\n- Record ID 3: ResearchRabbit_Export_1758912827.csv\n- Record ID 4: ResearchRabbit_Export_1758912827.csv\n- Record ID 5: ResearchRabbit_Export_1758912827.csv\n- Record ID 6: ResearchRabbit_Export_1758912827.csv\n- Record ID 7: ResearchRabbit_Export_1758912827.csv\n- Record ID 8: ResearchRabbit_Export_1758912827.csv\n- Record ID 9: ResearchRabbit_Export_1758912827.csv\n- Record ID 10: ResearchRabbit_Export_1758912827.csv\n- Record ID 11: ResearchRabbit_Export_1758912827.csv\n- Record ID 12: ResearchRabbit_Export_1758912827.csv\n- Record ID 13: ResearchRabbit_Export_1758912827.csv",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "_source_document"
+  }
+]

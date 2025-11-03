@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Factor Type':\n\n- Record ID 0: Human\n- Record ID 1: Human\n- Record ID 2: Human\n- Record ID 3: Animal\n- Record ID 4: Animal\n- Record ID 5: Animal\n- Record ID 6: Environmental\n- Record ID 7: Environmental\n- Record ID 8: Environmental\n- Record ID 9: Other",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "factor_type"
+  }
+]

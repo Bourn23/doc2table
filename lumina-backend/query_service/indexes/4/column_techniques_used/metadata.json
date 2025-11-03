@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Techniques Used':\n\n- Record ID 0: ['Agentic AI', 'LLM', 'Computer Vision', 'Generative AI', 'RAG', 'Physics-informed Machine Learning', 'Convolutional VAE', 'Transformer']\n- Record ID 1: ['Prompt Engineering', 'AI Agent', 'LLM']\n- Record ID 2: ['Computer Vision', 'VLM', 'Agentic AI']\n- Record ID 3: ['Computer Vision', 'Agentic AI', 'CNN', 'Behavior Trees']\n- Record ID 4: ['Time Series', 'ML', 'Deep Learning', 'Statistical Methods', 'Feature Engineering', 'Ensemble Model', 'Hyperparameter Tuning', 'Transformers']\n- Record ID 5: ['Reinforcement Learning', 'Machine Learning']",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "techniques_used"
+  }
+]

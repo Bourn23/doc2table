@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publication Venue':\n\n- Record ID 1: Structures, Elsevier, Volume 71, 7 January 2025, 108142\n- Record ID 2: Engineering Structures, Elsevier, Volume 293, 15 October 2023, 116632\n- Record ID 3: Sensors and Smart Structures Technologies for Civil, Mechanical, and Aerospace Systems, vol. 12046, pp. 348-354. SPIE, 2022.\n- Record ID 4: International Conference on Urban Intelligence and Applications, pp. 47-58. Springer, Singapore, 2020.",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "publication_venue"
+  }
+]

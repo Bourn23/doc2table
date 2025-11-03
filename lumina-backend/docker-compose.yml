@@ -1,0 +1,119 @@
+services:
+  # The API Gateway - The only service exposed to the outside world
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: lumina
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: lumina_db
+    ports:
+      - "5432:5432" # Expose Postgres port for debugging if needed
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lumina -d lumina_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  api-service:
+    build: 
+      context: .
+      dockerfile: ./api_service/Dockerfile
+    ports:
+      - "8000:8000" # Expose port 8000 on your machine to port 8000 in the container
+    volumes:
+      - ./shared:/app/shared # Shared code between services
+      - ./api_service:/app # Mount local code for live reloading
+      - uploaded_files_volume:/data/uploaded_files # Volume for uploaded files
+      - exports_data:/data/exports # Volume for exported data
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+      - EXTRACTION_SERVICE_URL=http://extraction-service:8001
+      - QUERY_SERVICE_URL=http://query-service:8002
+    depends_on:
+      extraction-service:
+        condition: service_started
+      query-service:
+        condition: service_started
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ./.env
+
+  # The Extraction Worker Service
+  extraction-service:
+    build: 
+      context: .
+      dockerfile: ./extraction_service/Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 # Run on a different port internally
+    volumes:
+      - ./shared:/app/shared
+      - ./extraction_service:/app
+      - uploaded_files_volume:/data/uploaded_files
+      - exports_data:/data/exports
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+      - postgres
+    env_file:
+      - ./.env
+
+  # The Query Worker Service
+  query-service:
+    build: 
+      context: .
+      dockerfile: ./query_service/Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8002 # Run on a different port internally
+    volumes:
+      - ./shared:/app/shared
+      - ./query_service:/app
+      - uploaded_files_volume:/data/uploaded_files
+      - exports_data:/data/exports
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+      - NEO4J_URL=neo4j://neo4j:7687
+    depends_on:
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_started
+      # neo4j:
+      #   condition: service_healthy
+    env_file:
+      - ./.env
+    
+
+  # The Redis Dependency
+  redis:
+    image: "redis:alpine" # Use an official image from Docker Hub
+    ports:
+      - "6379:6379" # Expose Redis port for debugging if needed
+
+
+    
+  # The Neo4j Dependency
+  # neo4j:
+  #   image: "neo4j:5-community" # Use an official image
+  #   ports:
+  #     - "7474:7474" # Neo4j Browser
+  #     - "7687:7687" # Bolt port for driver connection
+  #   environment:
+  #     - NEO4J_AUTH=neo4j/!@#Borna2324 # Set your desired password
+  #   healthcheck: # <-- ADD THIS ENTIRE BLOCK
+  #     test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+  #     interval: 5s
+  #     timeout: 10s
+  #     retries: 10
+
+volumes:
+  postgres_data:
+  uploaded_files_volume:
+  exports_data:

@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Skill':\n\n- Record ID 0: ['Agentic AI', 'LLM', 'Computer Vision', 'Gemini 2.5', 'LangChain', 'RAG', 'PyTorch', 'convolutional VAE', 'Transformer']\n- Record ID 1: ['Prompt Engineering', 'AI Agent', 'PyDantic', 'LangChain', 'GPT-4o', 'Gemini', 'MCP', 'NetworkX']\n- Record ID 2: ['Computer Vision', 'VLM', 'Agentic AI', 'Meta SAM2', 'Gemini VLM', 'Gemini 1.5 Flash VLM']\n- Record ID 3: ['Computer Vision', 'Agentic AI', 'Behavior trees', 'CNN']\n- Record ID 4: ['Time Series', 'XGBoost', 'Transformers']\n- Record ID 5: ['Reinforcement Learning', 'Scrapy', 'Airflow', 'MongoDB', 'GCP', 'PPO', 'A2C']\n- Record ID 6: ['AWS', 'GCP', 'Flask', 'Transformers', 'XGBoost', 'Data Structures', 'Algorithms']",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "Skill"
+  }
+]

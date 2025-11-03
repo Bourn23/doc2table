@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Work Experience':\n\n- Record ID 0: [{'title': 'Research Assistant', 'company': 'The Pennsylvania State University', 'start_date': '2021-01-01', 'end_date': 'Present'}, {'title': 'Co-Founder', 'company': 'Stock Brain', 'start_date': '2019-11-01', 'end_date': '2020-08-01'}]\n- Record ID 1: [{'title': 'Research Assistant', 'company': 'The Pennsylvania State University', 'start_date': '2021-01-01', 'end_date': '2026-05-01'}, {'title': 'Co-Founder', 'company': 'Stock Brain', 'start_date': '2019-11-01', 'end_date': '2020-08-01'}]",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "work_experience"
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Experience':\n\n- Record ID 0: [{'title': 'Research Assistant', 'company': None, 'years': '2021-Present'}, {'title': 'Co-Founder', 'company': None, 'years': 'Nov 2019 - Aug 2020'}]\n- Record ID 1: [{'title': 'Research Assistant', 'company': None, 'years': '2021-Present'}, {'title': 'Co-Founder', 'company': None, 'years': 'Nov 2019 - Aug 2020'}]",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "experience"
+  }
+]

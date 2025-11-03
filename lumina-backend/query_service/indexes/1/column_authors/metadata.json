@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Authors':\n\n- Record ID 0: ['Contursi, T.', 'Messina, A.', 'Williams, E. J.']",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "authors"
+  }
+]

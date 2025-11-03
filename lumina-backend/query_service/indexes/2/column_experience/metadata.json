@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Experience':\n\n- Record ID 0: [{'company': 'The Pennsylvania State University', 'position': 'Research Assistant', 'start_date': '2021-10', 'end_date': 'Present', 'description': 'Developed an Agentic AI framework to autonomously collect, synthesize, and predict material properties from scientific literature enabling the design of next generation batteries (Gemini 2.5, LangChain, RAG). Reduced the design cycle of new materials from weeks to minutes by developing a physics-informed machine learning framework (PyTorch). Reduced computation time by 5x by developing a computer vision model for 2D image reconstruction (PyTorch, convolutional VAE, Transformer). Presented at 7+ peer-reviewed conferences to technical and non-technical audiences. Published 2 first-author articles on applying AI in Engineering and Science in Q1 journals.'}, {'company': 'Stock Brain', 'position': 'Co-Founder', 'start_date': '2019-11', 'end_date': '2020-08', 'description': 'Selected as 1 of 25 participants (top 8% of 300+ applicants) for a highly competitive, founder-focused AI startup school/incubator backed by Digikala (Equivalent to Amazon). Co-founded and drove the strategy for a fintech startup designed to leverage technical indicators and machine learning to improve stock market predictions. Developed and executed a go-to-market and business growth strategy as founder in a startup accelerator, leveraging data-driven insights and stakeholder collaboration to refine business model and achieve measurable traction. Designed real-time data ingestion pipelines (Scrapy, Airflow, MongoDB, GCP) with 99.95% uptime. Trained reinforcement learning agents (PPO, A2C) for predictive trading, achieving a Sharpe ratio of 1.2.'}]",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "experience"
+  }
+]

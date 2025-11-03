@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publication Venue':\n\n- Record ID 8: Under Preparation\n- Record ID 9: Structures, Elsevier\n- Record ID 10: Engineering Structures, Elsevier\n- Record ID 11: SPIE\n- Record ID 12: International Conference on Urban Intelligence and Applications, Springer\n- Record ID 21: Under Preparation\n- Record ID 22: Structures, Elsevier\n- Record ID 23: Engineering Structures, Elsevier\n- Record ID 24: Sensors and Smart Structures Technologies for Civil, Mechanical, and Aerospace Systems, vol. 12046, pp. 348-354. SPIE\n- Record ID 25: International Conference on Urban Intelligence and Applications",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "publication_venue"
+  }
+]

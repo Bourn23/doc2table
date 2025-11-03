@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Structure Type':\n\n- Record ID 0: Truss",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "structure_type"
+  }
+]

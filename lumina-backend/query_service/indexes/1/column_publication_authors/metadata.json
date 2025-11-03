@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publication Authors':\n\n- Record ID 1: ['Farnod BR', 'Reinhart WF', 'Napolitano RK']\n- Record ID 2: ['Farnod BR', 'Reinhart WF', 'Napolitano RK']\n- Record ID 3: ['Farnod BR', 'Reinhart WF', 'Napolitano RK']\n- Record ID 4: ['Meyarian A', 'Yuan X', 'Farnod BR', 'Shi J', 'Liu J']",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "publication_authors"
+  }
+]

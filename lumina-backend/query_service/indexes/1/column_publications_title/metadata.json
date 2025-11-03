@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publications Title':\n\n- Record ID 2: Differentiable Path Planning for Material Design\n- Record ID 3: Damage localization using differentiable physics and displacement-based structural identification\n- Record ID 4: Displacement-based structural identification using differentiable physics\n- Record ID 5: Towards damage detection using physics-based modeling and data-driven optimization\n- Record ID 6: A Task-Aware Network for Multi-task Learning",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "publications_title"
+  }
+]

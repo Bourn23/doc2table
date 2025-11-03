@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Model Subject':\n\n- Record ID 0: social network simulations for online safety and information propagation\n- Record ID 1: multiple damage site detection in elastic structures\n- Record ID 2: metal printing (additive manufacturing)\n- Record ID 3: structural health monitoring\n- Record ID 4: social networks\n- Record ID 5: eigenvector sensitivity analysis for structural dynamics\n- Record ID 6: functionally graded materials (FGMs), Mo-Nb-Ta-Ti system phase stability and solidification behavior",
+    "session_id": 3,
+    "index_type": "column_wise",
+    "column_name": "model_subject"
+  }
+]

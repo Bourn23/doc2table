@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Contact Information':\n\n- Record ID 0: {'email': 'brfarnod@gmail.com', 'phone': '(929) 305-4530', 'linkedin': 'brfarnod'}\n- Record ID 1: {'email': 'brfarnod@gmail.com', 'phone': '(929) 305-4530', 'linkedin': None}",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "contact_information"
+  }
+]

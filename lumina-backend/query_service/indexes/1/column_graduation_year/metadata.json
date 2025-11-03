@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Graduation Year':\n\n- Record ID 0: 2026",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "graduation_year"
+  }
+]

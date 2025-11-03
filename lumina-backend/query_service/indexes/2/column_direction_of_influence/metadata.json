@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Direction Of Influence':\n\n- Record ID 0: Mixed\n- Record ID 1: Mixed\n- Record ID 2: Negative\n- Record ID 3: Negative\n- Record ID 4: Mixed\n- Record ID 5: Mixed\n- Record ID 6: Mixed\n- Record ID 7: Mixed\n- Record ID 8: Mixed\n- Record ID 9: Negative",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "direction_of_influence"
+  }
+]

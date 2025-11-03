@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Performance Metric Name':\n\n- Record ID 0: Accuracy\n- Record ID 1: Accuracy\n- Record ID 2: Accuracy\n- Record ID 3: Accuracy\n- Record ID 4: Computation Time Reduction\n- Record ID 5: Rank\n- Record ID 6: Accuracy\n- Record ID 7: Accuracy\n- Record ID 8: Uptime\n- Record ID 9: Sharpe Ratio\n- Record ID 10: Accuracy\n- Record ID 11: Accuracy\n- Record ID 12: Rank",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "performance_metric_name"
+  }
+]

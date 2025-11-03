@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Phone Number':\n\n- Record ID 0: (929) 305-4530",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "phone_number"
+  }
+]

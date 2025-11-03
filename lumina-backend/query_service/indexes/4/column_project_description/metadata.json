@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Project Description':\n\n- Record ID 0: Developed an Agentic AI framework to autonomously collect, synthesize, and predict material properties from scientific literature for the design of next-generation batteries.\n- Record ID 1: Built a structured dataset from collected tweets and simulated interactions of LLM-powered AI agents to generate and combine text with user behavioral metadata.\n- Record ID 2: Developed a real-time perception system for zero-shot segmentation and tracking of dynamic objects and integrated a VLM for scene understanding and object recognition.\n- Record ID 3: Developed an autonomous agent using behavior trees and CNN for competitive multi-agent simulation, incorporating perception and strategy adaptation.\n- Record ID 4: Combined ML, deep learning, and statistical methods with feature engineering for demand forecasting, building an ensemble model.\n- Record ID 5: Leveraged technical indicators and machine learning to improve stock market predictions and developed reinforcement learning agents for predictive trading.",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "project_description"
+  }
+]

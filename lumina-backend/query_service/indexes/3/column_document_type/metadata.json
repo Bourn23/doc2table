@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Document Type':\n\n- Record ID 0: review article\n- Record ID 1: research paper\n- Record ID 2: review article\n- Record ID 3: research paper\n- Record ID 4: thesis\n- Record ID 5: research paper\n- Record ID 6: Full Length Article",
+    "session_id": 3,
+    "index_type": "column_wise",
+    "column_name": "document_type"
+  }
+]

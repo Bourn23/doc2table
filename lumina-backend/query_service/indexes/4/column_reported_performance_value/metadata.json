@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Reported Performance Value':\n\n- Record ID 0: N/A\n- Record ID 1: Not explicitly stated, but emphasizes robustness and sensitivity of methodologies\n- Record ID 2: not specified\n- Record ID 3: overall efficient\n- Record ID 4: up to 96%\n- Record ID 5: accurate\n- Record ID 6: equal significance using weighting factors and normalization\n- Record ID 7: optimized\n- Record ID 8: frequency shifts\n- Record ID 9: 96%\n- Record ID 10: optimum value and small var...\n- Record ID 11: efficient and robust for damage detection with incomplete and sparse/missing binary signals\n- Record ID 12: various\n- Record ID 13: excellent",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "reported_performance_value"
+  }
+]

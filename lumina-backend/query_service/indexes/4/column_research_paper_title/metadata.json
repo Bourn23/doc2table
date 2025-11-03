@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Research Paper Title':\n\n- Record ID 0: The use of intelligent computational tools for damage detection and identification with an emphasis on composites – A review\n- Record ID 1: A Review of Vibration Based Inverse Methods for Damage Detection and Identification in Mechanical Structures Using Optimization Algorithms and ANN\n- Record ID 2: A sunflower optimization (SFO) algorithm applied to damage identification on laminated composite plates\n- Record ID 3: Sensor placement optimization applied to laminated composite plates under vibration\n- Record ID 4: An estimate of the location of multiple delaminations on aeronautical CFRP plates using modal data inverse problem\n- Record ID 5: Structural identification and evaluation for SHM applications\n- Record ID 6: Optimal sensor placement for spatial lattice structure based on three-dimensional redundancy elimination model\n- Record ID 7: Optimized damage identification in CFRP plates by reduced mode shapes and GA-ANN methods\n- Record ID 8: Delamination Identification for FRP Composites with Emphasis on Frequency-Based Vibration Monitoring-A Review\n- Record ID 9: Vibration-based delamination detection in curved composite plates\n- Record ID 10: A robust optimization for damage detection using multiobjective genetic algorithm, neural network and fuzzy decision making\n- Record ID 11: Data interpretation framework integrating machine learning and pattern recognition for self-powered data-driven damage identification with harvested energy variations\n- Record ID 12: Methods of damage detection on composites under low velocity impact: Review\n- Record ID 13: Inverse structural damage identification problem in CFRP laminated plates using SFO algorithm based on strain fields",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "research_paper_title"
+  }
+]

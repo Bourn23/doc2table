@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Skills':\n\n- Record ID 0: ['Generative AI', 'Machine Learning', 'Time Series Forecasting', 'Computer Vision', 'Python', 'PyTorch', 'JAX', 'SQL', 'Java', 'Data Structures', 'Algorithms', 'Object Oriented Programming (OOP)', 'Object-Oriented Design (OOD)', 'LLM', 'Prompt Engineering', 'HuggingFace', 'LangChain', 'FastAPI', 'Flask', 'Scikit-learn', 'XGBoost', 'AWS', 'Nvidia NIM', 'Docker', 'Airflow', 'Scrapy', 'MongoDB', 'MLFlow', 'Git', 'RAG', 'Gemini 2.5', 'convolutional VAE', 'Transformer', 'Gemini VLM', 'Meta SAM2', 'behavior trees', 'CNN', 'Reinforcement Learning', 'PPO', 'A2C']",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "skills"
+  }
+]

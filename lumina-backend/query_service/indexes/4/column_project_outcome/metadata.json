@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Project Outcome':\n\n- Record ID 0: Reduced the design cycle of new materials from weeks to minutes; Reduced computation time by 5x.\n- Record ID 4: Top 5% among 2,500+ teams\n- Record ID 5: Sharpe ratio of 1.2",
+    "session_id": 4,
+    "index_type": "column_wise",
+    "column_name": "project_outcome"
+  }
+]

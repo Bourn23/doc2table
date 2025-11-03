@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Degree':\n\n- Record ID 0: Ph.D. Candidate in Engineering",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "degree"
+  }
+]

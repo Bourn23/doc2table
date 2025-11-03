@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Technical Skills':\n\n- Record ID 0: ['Python', 'PyTorch', 'JAX', 'SQL', 'Java', 'Data Structures', 'Algorithms', 'Object Oriented Programming (OOP)', 'Object-Oriented Design (OOD)', 'LLM', 'Generative AI', 'Prompt Engineering', 'Computer Vision', 'HuggingFace', 'LangChain', 'FastAPI', 'Flask', 'Scikit-learn', 'XGBoost', 'AWS', 'Nvidia NIM', 'Docker', 'Airflow', 'Scrapy', 'MongoDB', 'MLFlow', 'Git', 'Gemini 2.5', 'RAG', 'Gemini VLM', 'Meta SAM2', 'Gemini 1.5 Flash VLM', 'behavior trees', 'CNN', 'Transformers', 'PPO', 'A2C', 'GCP', 'NetworkX']",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "technical_skills"
+  }
+]

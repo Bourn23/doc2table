@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Educational Background':\n\n- Record ID 0: [{'degree': 'Ph.D. Candidate in Engineering', 'major': 'Engineering', 'institution': 'The Pennsylvania State University', 'graduation_year': None}]",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "educational_background"
+  }
+]

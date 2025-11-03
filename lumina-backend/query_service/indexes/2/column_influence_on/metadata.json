@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Influence On':\n\n- Record ID 0: visitor perceptions of zoo animal welfare\n- Record ID 1: visitor perceptions of zoo animal welfare\n- Record ID 2: visitor perceptions of zoo animal welfare\n- Record ID 3: visitor perceptions of zoo animal welfare\n- Record ID 4: visitor perceptions of zoo animal welfare\n- Record ID 5: visitor perceptions of zoo animal welfare\n- Record ID 6: visitor perceptions of zoo animal welfare\n- Record ID 7: visitor perceptions of zoo animal welfare\n- Record ID 8: visitor perceptions of zoo animal welfare\n- Record ID 9: visitor attitudes, experiences, and behaviors",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "influence_on"
+  }
+]

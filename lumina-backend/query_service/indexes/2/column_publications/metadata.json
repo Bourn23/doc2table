@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publications':\n\n- Record ID 0: [{'title': 'Differentiable Planning for Advanced Manufacturing', 'authors': None, 'venue': None, 'year': 2025}, {'title': 'Damage localization using differentiable physics and displacement-based structural identification', 'authors': None, 'venue': 'Structures, Elsevier', 'year': 2025}, {'title': 'Displacement-based structural identification using differentiable physics', 'authors': None, 'venue': 'Engineering Structures, Elsevier', 'year': 2023}]",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "publications"
+  }
+]

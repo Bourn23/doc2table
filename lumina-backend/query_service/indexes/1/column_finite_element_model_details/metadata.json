@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Finite Element Model Details':\n\n- Record ID 0: {'mass_matrix_info': 'assumed to remain unchanged', 'stiffness_matrix_info': 'initial'}",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "finite_element_model_details"
+  }
+]

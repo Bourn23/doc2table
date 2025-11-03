@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Company':\n\n- Record ID 0: The Pennsylvania State University\n- Record ID 1: Stock Brain",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "company"
+  }
+]

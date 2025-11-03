@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Education History':\n\n- Record ID 0: [{'institution': 'The Pennsylvania State University', 'degree': 'Ph.D. Candidate in Engineering', 'graduation_year': 2026}]\n- Record ID 1: [{'institution': 'The Pennsylvania State University', 'degree': 'Ph.D. Candidate in Engineering', 'graduation_year': 2026}]",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "education_history"
+  }
+]

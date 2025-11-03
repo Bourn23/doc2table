@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Project Title':\n\n- Record ID 0: Agentic AI framework for material properties\n- Record ID 1: Physics-informed machine learning framework for material design\n- Record ID 2: Computer vision model for 2D image reconstruction\n- Record ID 3: Large-Scale Social Media Simulation using LLMs\n- Record ID 4: Embodied Gaming AI Agent\n- Record ID 5: Multi-Agent Fleet Management\n- Record ID 6: Kaggle Sticker Sales Forecasting\n- Record ID 7: AI-Powered Automated Trading System\n- Record ID 13: Agentic AI framework\n- Record ID 14: Physics-informed machine learning framework\n- Record ID 15: Computer vision model for 2D image reconstruction\n- Record ID 16: Large-Scale Social Media Simulation using LLMs\n- Record ID 17: Embodied Gaming AI Agent\n- Record ID 18: Multi-Agent Fleet Management\n- Record ID 19: Kaggle Sticker Sales Forecasting\n- Record ID 20: AI-Powered Automated Trading System",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "project_title"
+  }
+]

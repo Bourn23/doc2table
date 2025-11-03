@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Specific Factor':\n\n- Record ID 0: Ethical considerations (beliefs about captivity and animal rights)\n- Record ID 1: Direct human-animal interaction\n- Record ID 2: Inappropriate visitor behavior\n- Record ID 3: Disproportionate suffering (suitability of taxa for captivity)\n- Record ID 4: Animal behavior (active and natural vs. abnormal or inactive)\n- Record ID 5: Apparent health status\n- Record ID 6: The facility (zoo purpose and advertisement, facility size)\n- Record ID 7: The exhibit (naturalistic enclosure, enclosure size, enrichment, group size, condition of enclosure, diet, sensory stressors, temperature)\n- Record ID 8: Welfare interpretation (educational material)\n- Record ID 9: Impact of welfare perceptions on visitor experience and behavior",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "specific_factor"
+  }
+]

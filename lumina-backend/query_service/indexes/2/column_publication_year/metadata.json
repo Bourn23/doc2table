@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Publication Year':\n\n- Record ID 0: 2024\n- Record ID 1: 2024\n- Record ID 2: 2024\n- Record ID 3: 2024\n- Record ID 4: 2024\n- Record ID 5: 2024\n- Record ID 6: 2024\n- Record ID 7: 2024\n- Record ID 8: 2024\n- Record ID 9: 2024",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "publication_year"
+  }
+]

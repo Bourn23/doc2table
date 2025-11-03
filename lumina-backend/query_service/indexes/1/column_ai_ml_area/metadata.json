@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Ai Ml Area':\n\n- Record ID 0: ['Agentic AI', 'LLM', 'Computer Vision']\n- Record ID 1: ['Prompt Engineering', 'AI Agent']\n- Record ID 2: ['Computer Vision', 'VLM', 'Agentic AI']\n- Record ID 3: ['Computer Vision', 'Agentic AI']\n- Record ID 4: ['Time Series']\n- Record ID 5: ['Reinforcement Learning']\n- Record ID 11: ['Generative AI', 'Machine Learning', 'Time Series Forecasting', 'Computer Vision', 'LLM', 'Prompt Engineering', 'Agentic AI', 'VLM', 'Reinforcement Learning']",
+    "session_id": 1,
+    "index_type": "column_wise",
+    "column_name": "ai_ml_area"
+  }
+]

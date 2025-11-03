@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "text": "All data for the column 'Full Name':\n\n- Record ID 0: Borna Rahnamay Farnod\n- Record ID 1: Borna Rahnamay Farnod",
+    "session_id": 2,
+    "index_type": "column_wise",
+    "column_name": "full_name"
+  }
+]
