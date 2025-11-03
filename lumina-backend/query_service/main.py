@@ -399,6 +399,11 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
         
         # Use the 'fields' list, which is more reliable
         schema_fields = session.schema_details.get('fields', [])
+        if not schema_fields:
+            # Fall back to recommended schema
+            recommended = session.schema_details.get('recommendations', {}).get('recommended_schema', {})
+            schema_fields = recommended.get('fields', [])
+            logger.info("Using recommended schema as fallback")
         logger.info("Schema fields: %s", schema_fields)
         columns = [field['name'] for field in schema_fields]
 

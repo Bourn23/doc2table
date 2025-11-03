@@ -708,7 +708,7 @@ async def do_dynamic_extraction_work(
                     else:
                         record.data[safe_field_name] = values_list
                     
-                    record.data[safe_field_name] = values_list
+                    # record.data[safe_field_name] = values_list
                     flag_modified(record, "data")
                     records_updated_count += 1
                     all_new_values.extend(values_list)
