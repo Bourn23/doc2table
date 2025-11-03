@@ -691,7 +691,7 @@ async def do_dynamic_extraction_work(
                     continue
 
                 # Loop through the (value, record_id) pairs
-               if len(records_for_this_file) == 1:
+                if len(records_for_this_file) == 1:
                     record = records_for_this_file[0]
                     values_list = []
                     for item in parsed_data_list:
