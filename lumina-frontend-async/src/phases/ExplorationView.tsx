@@ -9,7 +9,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { GraphVisualization } from '../components/GraphVisualization';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import API_BASE_URL from '../utils/api';
+// import API_BASE_URL from '../utils/api';
 
 /**
  * ExplorationView - Hermes Mode
@@ -52,11 +52,12 @@ export const ExplorationView: React.FC = () => {
   };
 
   const handleDownload = (filepath: string) => {
-    // Extract filename from filepath (e.g., "exports/lumina_export_20250127.csv" -> "lumina_export_20250127.csv")
+    // Extract filename from filepath
     const filename = filepath.split('/').pop() || filepath;
 
-    // Create download URL
-    const downloadUrl = `${API_BASE_URL}/download/${filename}`;
+    // Create a simple relative URL
+    // Nginx will catch this and proxy it to your backend
+    const downloadUrl = `/download/${filename}`;
 
     // Open in new tab to trigger download
     window.open(downloadUrl, '_blank');

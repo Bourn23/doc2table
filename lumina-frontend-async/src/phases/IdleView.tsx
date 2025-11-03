@@ -159,7 +159,7 @@ export const IdleView: React.FC = () => {
             letterSpacing: '-0.02em',
           }}
         >
-          Illuminate your data
+          Chat with your data
         </h1>
 
         <p
@@ -180,7 +180,7 @@ export const IdleView: React.FC = () => {
             color: colors.text.tertiary,
           }}
         >
-          Transform your PDFs into structured data. Upload documents to extract meaningful data,
+          Convert your documents into a table. Upload your document to extract meaningful data,
           explore connections, and discover insights through natural conversation.
         </p>
 
@@ -206,7 +206,7 @@ export const IdleView: React.FC = () => {
               color: colors.text.primary,
             }}
           >
-            Drop PDFs here or click to upload
+            Drop files here or click to upload
           </p>
           <p style={{ fontSize: typography.sizes.bodySmall, color: colors.text.tertiary }}>
             Supports PDF, CSV, TXT, and Markdown files
