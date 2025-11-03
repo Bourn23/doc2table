@@ -1,4 +1,4 @@
-from agents import Agent, set_tracing_disabled, AgentHooks, RunContextWrapper, Tool, Runner, AgentOutputSchema, ModelSettings, Model, ModelProvider
+from agents import Agent, set_tracing_disabled, AgentHooks, RunContextWrapper, Tool, Runner, AgentOutputSchema, ModelSettings
 from agents.model_settings import ModelSettings
 from agents.extensions.models.litellm_provider import LitellmProvider
 from agents.extensions.models.litellm_model import LitellmModel
@@ -6,7 +6,7 @@ from shared.tools import *
 from typing import Dict, Iterable, List, Any, Literal
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 # import litellm
-from openai import AsyncOpenAI
+# from openai import AsyncOpenAI
 from agents import OpenAIChatCompletionsModel
 from agents.agent import StopAtTools
 import asyncio
@@ -44,32 +44,6 @@ gemini_model_lite = LitellmModel(model='gemini/gemini-2.5-flash-lite', api_key=o
 # llm = ChatNVIDIA(model=GRAPH_LLM_MODEL)
 
 
-### Local Model
-# EXTRACTION_LLM_MODEL = "qwen3:0.6b"
-# custom_client = AsyncOpenAI(base_url="http://localhost:8080/v1", api_key='fake_key_for_ollama')
-
-### # Local Model (MLX Server)
-class CustomLitellmModel(LitellmModel):
-    def __init__(self):
-        super().__init__(model="openai/default_model", api_key="fake_key_for_ollama", base_url="http://localhost:8080/v1")
-
-### Gemini Model
-gemini_model = LitellmModel(model='gemini/gemini-2.5-flash', api_key=os.getenv("GEMINI_API_KEY"))
-gemini_model_lite = LitellmModel(model='gemini/gemini-2.5-flash-lite', api_key=os.getenv("GEMINI_API_KEY"))
-
-
-### NVIDIA Model
-BASE_URL = "https://integrate.api.nvidia.com/v1"
-API_KEY = os.getenv("NVIDIA_API_KEY")
-MODEL_NAME = "nvidia/llama-3.1-nemotron-nano-8b-v1"
-
-nim_client = AsyncOpenAI(base_url=BASE_URL, api_key=API_KEY)
-class CustomModelProvider(ModelProvider):
-    def get_model(self, model_name: str | None) -> Model:
-        return OpenAIChatCompletionsModel(model=model_name or MODEL_NAME, openai_client=nim_client)
-
-CUSTOM_MODEL_PROVIDER = CustomModelProvider()
-
 class CustomLitellmModel(LitellmModel):
     def __init__(self):
         super().__init__(model="openai/default_model", api_key="fake_key_for_ollama", base_url="http://localhost:8080/v1")
@@ -83,8 +57,7 @@ class LitellmModelSelector:
             # litellm._turn_on_debug()
             # return CustomLitellmModel()
             
-            # return gemini_model_lite
-            return CUSTOM_MODEL_PROVIDER
+            return gemini_model_lite
             
             # return llm
             
@@ -94,8 +67,7 @@ class LitellmModelSelector:
             # return model
         else:
             # return LitellmProvider().get_model(f'ollama_chat/{EXTRACTION_LLM_MODEL}')
-            # return gemini_model
-            return CUSTOM_MODEL_PROVIDER
+            return gemini_model
             # return llm
         
 # here's how to use the selector
@@ -140,10 +112,7 @@ KEEP YOUR RECOMMENDATIONS TO A FEW IMPORTANT/PRACTICAL FIELDS (less than 5-6 FIE
 schema_agent = Agent(
     name = "Schema Generation Agent",
     instructions = SCHEMA_AGENT_PROMPT,
-    # output_type = SchemaRecommendation,
-    model_settings = ModelSettings(
-        extra_body={"nvext": {"guided_json": SchemaRecommendation}}
-    ),
+    output_type = SchemaRecommendation,
     model = LitellmModelSelector.get_model(use_custom=True),
 )
 
