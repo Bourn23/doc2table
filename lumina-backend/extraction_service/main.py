@@ -649,7 +649,7 @@ async def do_dynamic_extraction_work(
         all_new_values = []
         extraction_errors = []
         records_updated_count = 0
-
+        updated_records_list = []
         # --- START NEW MAPPING LOGIC ---
         # First, create a master dictionary of all records by their string ID
         all_records_by_id = {}
@@ -712,6 +712,7 @@ async def do_dynamic_extraction_work(
                     flag_modified(record, "data")
                     records_updated_count += 1
                     all_new_values.extend(values_list)
+                    updated_records_list.append(record)
                     logger.info(f"Stored {len(values_list)} value(s) in single record for {filename}")  # ← Change log message
                 else:
                     # Multiple records → map value to each record by record_id
@@ -731,13 +732,14 @@ async def do_dynamic_extraction_work(
                             flag_modified(record_to_update, "data")
                             records_updated_count += 1
                             all_new_values.append(value)
+                            updated_records_list.append(record_to_update)
                         else:
                             logger.error(f"Agent returned data for an unknown {record_id}.")
 
             except Exception as e:
                 logger.error(f"Failed to parse agent response for {filename}: {e}")
                 extraction_errors.append({"filename": filename, "error": f"Failed to parse agent response: {e}"})
-                
+
         logger.info(f"Dynamic extraction complete. Explicitly mapped and updated {records_updated_count} records.")
         # 5. Update records in the database
         await job_manager.update_status(job_id, "PROCESSING", f"Updating {records_updated_count} records in the database...")
@@ -753,7 +755,14 @@ async def do_dynamic_extraction_work(
         flag_modified(session, "schema_details")
         
         await db.commit() # Commits all record and session changes
+        await db.refresh(session)
 
+        # Manually serialize the data
+        serialized_records = []
+        for rec in updated_records_list:
+            await db.refresh(rec)
+            serialized_records.append(rec.to_dict())
+        
         # 6. Finalize Job
         message = f"Successfully added '{field_name}' to {records_updated_count} records."
         sample_values = [v for v in all_new_values if v is not None][:3]
@@ -765,7 +774,7 @@ async def do_dynamic_extraction_work(
             records_updated=records_updated_count,
             sample_values=sample_values,
             new_field=new_field_schema,
-            new_records= None
+            new_records= [record.data for record in updated_records_list]  # return data dicts of first 5 updated records
         )
         await job_manager.update_status(job_id, "COMPLETED", message, result=final_result.model_dump())
 

@@ -500,7 +500,11 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         // Update extracted data with new column
         if (jobResult.new_records && jobResult.new_field) {
+          console.log('🧬 Updating state directly with new column data.');
           get().updateExtractedData(jobResult.new_records, jobResult.new_field);
+        } else {
+          console.warn('⚠️ Job completed but new_records not provided. Falling back to fetch.');
+          await get().fetchExtractedData();
         }
 
         // Clear job tracking
@@ -513,9 +517,12 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         // Re-run the original query to get the answer
         console.log('🔄 Re-running query to get final answer...');
-        await get().fetchExtractedData(); // Refresh data before querying
+        // await get().fetchExtractedData(); // Refresh data before querying
+        const finalResult = await api.queryData(sessionId, queryText, 5);
+        console.log('📬 Received FINAL result from backend:', finalResult);
         
         const queryResult: QueryResult = {
+          // Use 'finalResult' which we just got from the second query
           query: finalResult.query,
           answer: finalResult.answer,
           confidence: finalResult.confidence,
