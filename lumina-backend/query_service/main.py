@@ -394,18 +394,27 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
     try:
         session_query = select(models.Session).where(models.Session.id == req.session_id)
         session = (await db.execute(session_query)).scalar_one()
-        logger.info("Recommended schema %s", session.schema_details['recommendations']['recommended_schema'])
         
-        
-        # Use the 'fields' list, which is more reliable
+        # Try 'fields' first, fall back to recommended_schema
         schema_fields = session.schema_details.get('fields', [])
+        
         if not schema_fields:
-            # Fall back to recommended schema
-            recommended = session.schema_details.get('recommendations', {}).get('recommended_schema', {})
-            schema_fields = recommended.get('fields', [])
+            # Fall back to recommended schema - it's already a list!
+            recommended = session.schema_details.get('recommendations', {}).get('recommended_schema', [])
+            schema_fields = recommended  # ← Don't call .get('fields') on it!
             logger.info("Using recommended schema as fallback")
+        
         logger.info("Schema fields: %s", schema_fields)
-        columns = [field['name'] for field in schema_fields]
+        
+        # Handle different field name formats (field_name vs name)
+        columns = []
+        for field in schema_fields:
+            # Try 'name' first (used in dynamic extraction), fall back to 'field_name' (used in initial schema)
+            col_name = field.get('name') or field.get('field_name')
+            if col_name:
+                columns.append(col_name)
+
+        logger.info("Extracted column names: %s", columns)
 
         # Fetch data preview
         first_record_query = select(models.ExtractedRecord).where(
@@ -420,13 +429,13 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
             for col in columns:
                 val = first_record.data.get(col)
                 if val is not None:
-                    # Truncate long values for the prompt
                     val_str = str(val)
                     if len(val_str) > 70:
                         val_str = val_str[:70] + "..."
                     preview_items.append(f"  - {col}: {val_str}")
             data_preview = "\n".join(preview_items)
-        print("Agent is seeing these columns: ", columns)
+        
+        logger.info("Agent is seeing these columns: %s", columns)
         router_input = f"""User Query: {req.query}
         
         Existing columns: {', '.join(columns)}
