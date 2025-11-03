@@ -4,10 +4,14 @@ services:
     build:
       context: ../lumina-frontend-async
       dockerfile: Dockerfile
-    ports:
-      - "80:80" # Expose port 80 on your machine to port 80 in the container
     depends_on:
-      - api-service
+    - api-service
+    ports:
+    - 80:80/tcp
+    - 443:443/tcp
+    volumes:
+    - /etc/letsencrypt:/etc/letsencrypt:ro  # <-- THIS MUST BE PRESENT
+    - /var/lib/letsencrypt:/var/lib/letsencrypt:ro # <-- THIS MUST BE PRESENT
 
   postgres:
     image: postgres:15-alpine
