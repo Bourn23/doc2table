@@ -9,6 +9,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { GraphVisualization } from '../components/GraphVisualization';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { API_BASE_URL } from '../utils/api';
 
 /**
  * ExplorationView - Hermes Mode
@@ -55,7 +56,7 @@ export const ExplorationView: React.FC = () => {
     const filename = filepath.split('/').pop() || filepath;
 
     // Create download URL
-    const downloadUrl = `http://localhost:8000/download/${filename}`;
+    const downloadUrl = `${API_BASE_URL}/download/${filename}`;
 
     // Open in new tab to trigger download
     window.open(downloadUrl, '_blank');

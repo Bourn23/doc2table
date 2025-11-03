@@ -1,6 +1,9 @@
 import { JobStatus, JobUpdate } from '../types';
+// write a line to import API_BASE_URL from './api';
+import { API_BASE_URL } from './api';
 
 const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000';
+
 
 export interface JobManagerOptions {
   onUpdate?: (update: JobUpdate) => void;
@@ -119,7 +122,8 @@ export class JobManager {
 
     const poll = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/jobs/${this.jobId}/status`);
+        // const response = await fetch(`http://localhost:8000/jobs/${this.jobId}/status`);
+        const response = await fetch(`${API_BASE_URL}/jobs/${this.jobId}/status`);
         const update: JobUpdate = await response.json();
 
         console.log(`📊 Poll update:`, update);
