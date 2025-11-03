@@ -132,7 +132,7 @@ export class JobManager {
     const poll = async () => {
       try {
         // const response = await fetch(`http://localhost:8000/jobs/${this.jobId}/status`);
-        const response = await fetch(`${API_BASE_URL}/jobs/${this.jobId}/status`);
+        const response = await fetch(`api/jobs/${this.jobId}/status`);
         const update: JobUpdate = await response.json();
 
         console.log(`📊 Poll update:`, update);
