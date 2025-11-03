@@ -396,7 +396,8 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
         session = (await db.execute(session_query)).scalar_one()
         
         # Try 'fields' first, fall back to recommended_schema
-        schema_fields = session.schema_details.get('fields', [])
+        # schema_fields = session.schema_details.get('fields', []) 
+        schema_fields = None
         
         if not schema_fields:
             # Fall back to recommended schema - it's already a list!
