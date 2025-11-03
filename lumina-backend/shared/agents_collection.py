@@ -209,6 +209,7 @@ You will receive a list of field recommendations as a JSON object. Each field wi
     - For numeric fields like "age" or "rating", add `ge` (greater than or equal to) and/or `le` (less than or equal to) constraints.
     - Keep Field parameters minimal - only use description, and optionally regex/ge/le when truly needed
 6.  **Generate Extraction Prompt**: Create a concise prompt that will guide another LLM to extract data for this specific model from unstructured text.
+7.  **NO** use of types other than common types (string, int, float, bool, list, nested BaseModel). Like no need to verify email with EmailStr if not specified.
 
 **EXAMPLE 1: Simple Fields**
 ---
