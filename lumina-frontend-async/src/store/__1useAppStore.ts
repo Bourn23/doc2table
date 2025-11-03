@@ -539,19 +539,6 @@ export const useAppStore = create<AppState>((set, get) => ({
         });
 
         // Re-run the original query to get the answer
-        console.log('✅ Dynamic extraction completed:', jobResult);
-
-        console.log('✅ Dynamic extraction completed:', jobResult);
-
-        // Clear job tracking
-        set({
-          currentJobId: null,
-          currentJobService: null,
-          jobStatus: null,
-          jobMessage: null,
-        });
-
-        // Re-run the original query to get the answer
         console.log('🔄 Re-running query to get final answer...');
         await get().fetchExtractedData(); // Refresh data before querying
         
@@ -581,7 +568,6 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         return;
       }
-
 
       // Handle regular query result
       if (
