@@ -691,28 +691,28 @@ async def do_dynamic_extraction_work(
                     continue
 
                 # Loop through the (value, record_id) pairs
-                if len(records_for_this_file) == 1:
+               if len(records_for_this_file) == 1:
                     record = records_for_this_file[0]
                     values_list = []
                     for item in parsed_data_list:
                         value = item.get("value")
                         if value is not None:
-                            # If value is already a list, extend; otherwise append
                             if isinstance(value, list):
                                 values_list.extend(value)
                             else:
                                 values_list.append(value)
                     
+                    # Store based on count
                     if len(values_list) == 1:
-                        record.data[safe_field_name] = values_list[0]
+                        record.data[safe_field_name] = values_list[0]  # ← Single string
                     else:
-                        record.data[safe_field_name] = values_list
+                        record.data[safe_field_name] = values_list      # ← Array
+                
                     
-                    # record.data[safe_field_name] = values_list
                     flag_modified(record, "data")
                     records_updated_count += 1
                     all_new_values.extend(values_list)
-                    logger.info(f"Stored {len(values_list)} values as list in single record for {filename}")                
+                    logger.info(f"Stored {len(values_list)} value(s) in single record for {filename}")  # ← Change log message
                 else:
                     # Multiple records → map value to each record by record_id
                     for item in parsed_data_list:

@@ -509,19 +509,25 @@ export const ExplorationView: React.FC = () => {
                       >
                         {/* CHANGE 2: Iterate over 'visibleFields' again to ensure cells match headers */}
                         {visibleFields.map((field) => {
-                        // Handle nested objects ---
                         const cellValue = row[field.name] ?? null;
                         let displayValue;
 
                         if (cellValue === null) {
-                          displayValue = ''; // Render nothing for null
+                          displayValue = '';
+                        } else if (Array.isArray(cellValue)) {
+                          // If it's an array with one item, just show the item
+                          if (cellValue.length === 1) {
+                            displayValue = String(cellValue[0]);
+                          } else {
+                            // Multiple items: show as formatted list or JSON
+                            displayValue = cellValue.join(', '); // or JSON.stringify(cellValue)
+                          }
                         } else if (typeof cellValue === 'object') {
-                          // If it's an object or array, stringify it
                           displayValue = JSON.stringify(cellValue);
                         } else {
-                          // Otherwise, convert to string
                           displayValue = String(cellValue);
                         }
+                        
                         return (
                           <td
                             key={field.name}
