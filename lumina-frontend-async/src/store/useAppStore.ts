@@ -559,28 +559,28 @@ export const useAppStore = create<AppState>((set, get) => ({
         });
 
         // Re-run the original query to get the answer
-        console.log('🔄 Re-running query to get final answer...');
-        // await get().fetchExtractedData(); // Refresh data before querying
-        const finalResult = await api.queryData(sessionId, queryText, 5);
-        console.log('📬 Received FINAL result from backend:', finalResult);
+        // console.log('🔄 Re-running query to get final answer...');
+        // // await get().fetchExtractedData(); // Refresh data before querying
+        // const finalResult = await api.queryData(sessionId, queryText, 5);
+        // console.log('📬 Received FINAL result from backend:', finalResult);
         
-        const queryResult: QueryResult = {
-          // Use 'finalResult' which we just got from the second query
-          query: finalResult.query,
-          answer: finalResult.answer,
-          confidence: finalResult.confidence,
-          sources: finalResult.sources,
-          relevantRecords: finalResult.relevant_records.map(r => ({
-            text: r.text,
-            relevanceScore: r.relevanceScore,
-            chunkId: r.chunkId
-          })),
-          result_type: finalResult.result_type,
-          function_result: finalResult.function_result,
-        };
+        // const queryResult: QueryResult = {
+        //   // Use 'finalResult' which we just got from the second query
+        //   query: finalResult.query,
+        //   answer: finalResult.answer,
+        //   confidence: finalResult.confidence,
+        //   sources: finalResult.sources,
+        //   relevantRecords: finalResult.relevant_records.map(r => ({
+        //     text: r.text,
+        //     relevanceScore: r.relevanceScore,
+        //     chunkId: r.chunkId
+        //   })),
+        //   result_type: finalResult.result_type,
+        //   function_result: finalResult.function_result,
+        // };
 
         set({
-          currentResult: queryResult,
+          currentResult: null,
           phase: AppPhase.INSIGHT,
           currentQuery: { ...query, status: 'complete' },
         });
