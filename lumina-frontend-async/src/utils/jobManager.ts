@@ -2,7 +2,16 @@ import { JobStatus, JobUpdate } from '../types';
 // write a line to import API_BASE_URL from './api';
 import API_BASE_URL from './api';
 
-const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000';
+// const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000';
+// Determine the WebSocket protocol based on the window's protocol
+const wsProtocol = window.location.protocol === 'https:.' ? 'wss://' : 'ws://';
+
+// Get the current host (e.g., "your_ip_address" or "lumina.com")
+const wsHost = window.location.host;
+
+// This is now your dynamic base URL, e.g., "ws://your_ip_address"
+// The rest of your code will add the "/ws/status/..." path
+const WS_BASE_URL = `${wsProtocol}${wsHost}`;
 
 
 export interface JobManagerOptions {
