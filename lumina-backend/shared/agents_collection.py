@@ -1,4 +1,4 @@
-from agents import Agent, set_tracing_disabled, AgentHooks, RunContextWrapper, Tool, Runner, AgentOutputSchema, ModelSettings, Model, ModelProvider, ModelSettings
+from agents import Agent, set_tracing_disabled, AgentHooks, RunContextWrapper, Tool, Runner, AgentOutputSchema, ModelSettings
 from agents.model_settings import ModelSettings
 from agents.extensions.models.litellm_provider import LitellmProvider
 from agents.extensions.models.litellm_model import LitellmModel
@@ -6,7 +6,7 @@ from shared.tools import *
 from typing import Dict, Iterable, List, Any, Literal
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 # import litellm
-from openai import AsyncOpenAI
+# from openai import AsyncOpenAI
 from agents import OpenAIChatCompletionsModel
 from agents.agent import StopAtTools
 import asyncio
@@ -44,44 +44,6 @@ gemini_model_lite = LitellmModel(model='gemini/gemini-2.5-flash-lite', api_key=o
 # llm = ChatNVIDIA(model=GRAPH_LLM_MODEL)
 
 
-### Local Model
-# EXTRACTION_LLM_MODEL = "qwen3:0.6b"
-# custom_client = AsyncOpenAI(base_url="http://localhost:8080/v1", api_key='fake_key_for_ollama')
-
-### # Local Model (MLX Server)
-class CustomLitellmModel(LitellmModel):
-    def __init__(self):
-        super().__init__(model="openai/default_model", api_key="fake_key_for_ollama", base_url="http://localhost:8080/v1")
-
-### Gemini Model
-gemini_model = LitellmModel(model='gemini/gemini-2.5-flash', api_key=os.getenv("GEMINI_API_KEY"))
-gemini_model_lite = LitellmModel(model='gemini/gemini-2.5-flash-lite', api_key=os.getenv("GEMINI_API_KEY"))
-
-
-### NVIDIA Model
-from agents import set_default_openai_client, set_default_openai_api
-BASE_URL = "https://integrate.api.nvidia.com/v1"
-API_KEY = os.getenv("NVIDIA_API_KEY")
-MODEL_NAME = "nvidia/llama-3.1-nemotron-nano-8b-v1"
-MODEL_NAME_LARGE = "nvidia/llama-3.3-nemotron-super-49b-v1.5"
-
-nim_client = AsyncOpenAI(base_url=BASE_URL, api_key=API_KEY)
-
-set_default_openai_client(client=nim_client, use_for_tracing=False)
-set_default_openai_api("chat_completions")
-set_tracing_disabled(disabled=True)
-
-from shared.agent_wrapper import NVIDIANIMModel
-nvidia_nim_model = NVIDIANIMModel(model=MODEL_NAME, openai_client=nim_client)
-nvidia_nim_model_large = NVIDIANIMModel(model=MODEL_NAME_LARGE, openai_client=nim_client)
-# class CustomModelProvider(ModelProvider):
-#     def get_model(self, model_name: str | None) -> Model:
-#         return OpenAIChatCompletionsModel(model=model_name or MODEL_NAME, openai_client=nim_client)
-
-
-
-# CUSTOM_MODEL_PROVIDER = CustomModelProvider()
-
 class CustomLitellmModel(LitellmModel):
     def __init__(self):
         super().__init__(model="openai/default_model", api_key="fake_key_for_ollama", base_url="http://localhost:8080/v1")
@@ -96,9 +58,6 @@ class LitellmModelSelector:
             # return CustomLitellmModel()
             
             return gemini_model_lite
-            # return nvidia_nim_model
-            # return CUSTOM_MODEL_PROVIDER
-            
             
             # return llm
             
@@ -109,8 +68,6 @@ class LitellmModelSelector:
         else:
             # return LitellmProvider().get_model(f'ollama_chat/{EXTRACTION_LLM_MODEL}')
             return gemini_model
-            # return CUSTOM_MODEL_PROVIDER
-            # return nvidia_nim_model_large
             # return llm
         
 # here's how to use the selector
@@ -136,7 +93,7 @@ class CustomAgentHooks(AgentHooks):
             f"### {self.event_counter}: Tool {tool.name} finished. result={result}, name={context.tool_name}, call_id={context.tool_call_id}, args={context.tool_arguments}."  # type: ignore[attr-defined]
         )
 # schema generation agent
-SCHEMA_AGENT_PROMPT = """detailed thinking off \nYou are a data extraction expert. Your job is to analyze the user's extraction intention 
+SCHEMA_AGENT_PROMPT = """You are a data extraction expert. Your job is to analyze the user's extraction intention 
 and recommend a comprehensive schema of fields to extract from documents.
 
 For each field, you should:
@@ -185,8 +142,7 @@ class ExtractionSchemaUpdated(BaseModel):
     extraction_prompt: ExtractionPrompt = Field(description="Detailed prompt for extraction agent")
     field_mappings: List[FieldMapping] = Field(description="Mapping of field names to descriptions")
 
-PYDANTIC_AGENT_PROMPT = """detailed thinking on \n
-You are a meticulous Pydantic model architect. Your sole purpose is to convert a user's list of field recommendations into a production-ready Pydantic model.
+PYDANTIC_AGENT_PROMPT = """You are a meticulous Pydantic model architect. Your sole purpose is to convert a user's list of field recommendations into a production-ready Pydantic model.
 
 **INPUT FORMAT:**
 You will receive a list of field recommendations as a JSON object. Each field will have a name, a type, and a description.
@@ -411,7 +367,7 @@ pydantic_code_agent = Agent(
     instructions = PYDANTIC_AGENT_PROMPT,
     output_type = PydanticModelCode,
     hooks = CustomAgentHooks(display_name="Pydantic Code Agent"),
-    model = LitellmModelSelector.get_model(use_custom=False),
+    model = LitellmModelSelector.get_model(use_custom=True),
     # tool_use_behavior = StopAtTools(stop_at_tool_names=["return_final_code_schema"]),
     # tools = [verify_pydantic_model_code, validate_pydantic_model_structure, return_final_code_schema],
     # tools = [return_final_code_schema],
@@ -419,7 +375,7 @@ pydantic_code_agent = Agent(
 
 extraction_prompt_agent = Agent(
     name = "Extraction Prompt Generation Agent",
-    instructions = "detailed thinking on \n"
+    instructions = "You are an expert in crafting detailed extraction prompts for LLMs based on provided field recommendations, ensure to pass on the limits and validations specified by the user."
                    "Your task is to generate a comprehensive extraction prompt that guides the LLM to accurately identify and extract each field. "
                    "Ensure the prompt includes clear instructions, examples, and any necessary context to improve extraction accuracy."
                    "TO PREVENT DOWNSTREAM FAILURES, MAKE SURE THE FIELDS are OPTIONAL.",
@@ -435,7 +391,7 @@ field_mapping_agent = Agent(
                    "Ensure each mapping is clear and concise to facilitate accurate data extraction.",
     output_type = List[FieldMapping],
     hooks = CustomAgentHooks(display_name="Field Mapping Agent"),
-    model = LitellmModelSelector.get_model(use_custom=False)
+    model = LitellmModelSelector.get_model(use_custom=True)
 )
 
 
@@ -492,7 +448,7 @@ async def extract_from_single_document(
                 instructions=extraction_prompt,
                 output_type=AgentOutputSchema(Iterable[DynamicExtractionModel], strict_json_schema=False),
                 hooks=CustomAgentHooks(display_name=f"Extractor ({filename})"),
-                model=LitellmModelSelector.get_model(use_custom=False),
+                model=LitellmModelSelector.get_model(use_custom=True),
                 model_settings=ModelSettings(max_output_tokens=MAX_OUTPUT_TOKEN)
             )
 
@@ -678,8 +634,7 @@ async def extract_first_paragraphs(file_path: str, num_paragraphs: int = 2) -> s
         return ""
 
 
-DOCUMENT_CLASSIFICATION_PROMPT = """detailed thinking on \n
-You are an expert document classifier specializing in scientific and technical literature.
+DOCUMENT_CLASSIFICATION_PROMPT = """You are an expert document classifier specializing in scientific and technical literature.
 
 Your task is to analyze a document excerpt (first 1-2 paragraphs) and classify it across multiple dimensions:
 
@@ -722,12 +677,11 @@ intention_recommendation_agent = Agent(
     instructions=INTENTION_RECOMMENDATION_PROMPT,
     output_type=IntentionRecommendation,
     hooks=CustomAgentHooks(display_name="Intention Recommender"),
-    model=LitellmModelSelector.get_model(use_custom=False),
+    model=LitellmModelSelector.get_model(use_custom=True),
 )
 
 
-QUERY_ROUTER_PROMPT = """detailed thinking on \n
-You are a query router. Based on the user's query and the available columns, decide the intent.
+QUERY_ROUTER_PROMPT = """You are a query router. Based on the user's query and the available columns, decide the intent.
 
 The user will provide:
 1. Available data columns
@@ -825,7 +779,7 @@ query_router_agent = Agent(
 ### Synthesis Agent ###
 synthesis_agent = Agent(
     name="Synthesis Agent",
-    instructions="detailed thinking on\nYou are an expert data synthesis agent. Your task is to answer user queries by synthesizing information from multiple data columns. ",
+    instructions="You are an expert data synthesis agent. Your task is to answer user queries by synthesizing information from multiple data columns. ",
     output_type=str,
     hooks=CustomAgentHooks(display_name="Synthesis Agent"),
     model=LitellmModelSelector.get_model(use_custom=True),
@@ -835,6 +789,66 @@ synthesis_agent = Agent(
 
 
 ### Function Handlers ###
+
+async def export_to_csv(records: List[Dict[str, any]], filename: str = "lumina_export") -> Dict[str, any]:
+    """
+    Exports extracted records to CSV format.
+
+    Args:
+        records: List of dictionaries containing extracted data
+        filename: Base filename for the CSV (without extension)
+
+    Returns:
+        Dictionary with:
+        - success: Boolean indicating if export succeeded
+        - filepath: Path to the exported CSV file
+        - message: Human-readable result message
+    """
+    import csv
+    from datetime import datetime
+
+    try:
+        if not records or len(records) == 0:
+            return {
+                "success": False,
+                "message": "No data to export. Please extract data first.",
+                "filepath": None
+            }
+
+        # Create exports directory if it doesn't exist
+        os.makedirs("/data/exports", exist_ok=True)
+
+        # Generate timestamped filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filepath = os.path.join("/data/exports", f"{filename}_{timestamp}.csv")
+
+        # Get field names from first record
+        fieldnames = list(records[0].keys())
+
+        # Write CSV
+        with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(records)
+
+        print(f"✅ Exported {len(records)} records to {filepath}")
+
+        return {
+            "success": True,
+            "filepath": filepath,
+            "message": f"Successfully exported {len(records)} records to {os.path.basename(filepath)}",
+            "record_count": len(records)
+        }
+
+    except Exception as e:
+        print(f"❌ CSV export failed: {e}")
+        return {
+            "success": False,
+            "message": f"Export failed: {str(e)}",
+            "filepath": None
+        }
+
+
 async def analyze_documents_pipeline(file_paths: List[str]) -> Dict[str, any]:
     """
     Analyzes uploaded documents and recommends extraction intention and schema.
