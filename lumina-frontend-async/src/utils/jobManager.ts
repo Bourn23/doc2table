@@ -4,7 +4,7 @@ import API_BASE_URL from './api';
 
 // const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000';
 // Determine the WebSocket protocol based on the window's protocol
-const wsProtocol = window.location.protocol === 'https:.' ? 'wss://' : 'ws://';
+const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 
 // Get the current host (e.g., "your_ip_address" or "lumina.com")
 const wsHost = window.location.host;
