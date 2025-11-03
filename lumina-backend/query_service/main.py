@@ -396,25 +396,29 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
         session = (await db.execute(session_query)).scalar_one()
         
         # Try 'fields' first, fall back to recommended_schema
-        # schema_fields = session.schema_details.get('fields', []) 
-        schema_fields = None
+        old_schema_fields = session.schema_details.get('fields', []) 
+        # schema_fields = None
         
-        if not schema_fields:
+        # if not schema_fields:
             # Fall back to recommended schema - it's already a list!
-            recommended = session.schema_details.get('recommendations', {}).get('recommended_schema', [])
-            schema_fields = recommended  # ← Don't call .get('fields') on it!
-            logger.info("Using recommended schema as fallback")
+        recommended = session.schema_details.get('recommendations', {}).get('recommended_schema', [])
+        new_schema_fields = recommended  # ← Don't call .get('fields') on it!
+            # logger.info("Using recommended schema as fallback")
         
-        logger.info("Schema fields: %s", schema_fields)
+        # logger.info("Schema fields: %s", schema_fields)
         
         # Handle different field name formats (field_name vs name)
         columns = []
-        for field in schema_fields:
+        for field in old_schema_fields:
             # Try 'name' first (used in dynamic extraction), fall back to 'field_name' (used in initial schema)
             col_name = field.get('name') or field.get('field_name')
             if col_name:
                 columns.append(col_name)
-
+        for field in new_schema_fields:
+            col_name = field.get('name') or field.get('field_name')
+            if col_name and col_name not in columns:
+                columns.append(col_name)
+        
         logger.info("Extracted column names: %s", columns)
 
         # Fetch data preview
