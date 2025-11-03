@@ -421,13 +421,13 @@ async def query_data_endpoint(req: QueryRequest, db: AsyncSession = Depends(get_
                         val_str = val_str[:70] + "..."
                     preview_items.append(f"  - {col}: {val_str}")
             data_preview = "\n".join(preview_items)
+        print("Agent is seeing these columns: ", columns)
+        router_input = f"""User Query: {req.query}
+        
+        Existing columns: {', '.join(columns)}
 
-        router_input = f"""Available columns: {', '.join(columns)}
-
-Data Preview (from first record):
+Data Preview (from first record) -- use this to understand data types and content to decide if you need to do dynamic extraction or RAG querying:
 {data_preview}
-
-User Query: {req.query}
 """
         router_result = await run_agent_gracefully(query_router_agent, router_input)
         intent = router_result.final_output
