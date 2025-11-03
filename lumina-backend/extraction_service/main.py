@@ -703,6 +703,11 @@ async def do_dynamic_extraction_work(
                             else:
                                 values_list.append(value)
                     
+                    if len(values_list) == 1:
+                        record.data[safe_field_name] = values_list[0]
+                    else:
+                        record.data[safe_field_name] = values_list
+                    
                     record.data[safe_field_name] = values_list
                     flag_modified(record, "data")
                     records_updated_count += 1
