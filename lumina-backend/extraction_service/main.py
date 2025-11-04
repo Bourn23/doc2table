@@ -693,7 +693,7 @@ async def do_dynamic_extraction_work(
                 if len(records_for_this_file) == 1: # got until here
                     logger.info("--- MAPPING SINGLE RECORD (EXTRACTED COL HAS 1 ENTRY) ---")
                     logger.info(f"RECORDS FOR THIS FILE: {records_for_this_file}")
-                    record = records_for_this_file[0]
+                    record = record_for_this_file[0]
                     logger.info(f"RECORD[0]: {record}")
                     values_list = []
                     for item in parsed_data_list:
