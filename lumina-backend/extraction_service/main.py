@@ -528,7 +528,11 @@ async def do_dynamic_extraction_work(
         files_query = select(models.UploadedFile).where(models.UploadedFile.session_id == session_id)
         session = await db.get(models.Session, session_id)
         
+        # log existing data in the session
+        logger.info(f"Existing session data: {session.data}")
+
         existing_records = (await db.execute(records_query)).scalars().all()
+        logger.info(f"--- FETCHED {existing_records} EXISTING RECORDS ---")
         uploaded_files = (await db.execute(files_query)).scalars().all()
 
         if not existing_records or not uploaded_files or not session:
@@ -679,7 +683,7 @@ async def do_dynamic_extraction_work(
 
             try:
                 # The agent returns {'results': [ { 'extracted_data': [ {value: V, record_id: ID}, ... ] } ]}
-                parsed_data_list = result.get("results", [{}])[0].get("extracted_data", [])
+                parsed_data_list = result.get("results", [{}])[0].get("extracted_data", []) # --> [{'value': None, 'record_id': 'record_55'}]
                 
                 if not parsed_data_list:
                     logger.warning(f"Agent returned no data for {filename}. Parsed list is empty.")
@@ -689,8 +693,9 @@ async def do_dynamic_extraction_work(
                 # Loop through the (value, record_id) pairs
                 if len(records_for_this_file) == 1: # got until here
                     logger.info("--- MAPPING SINGLE RECORD (EXTRACTED COL HAS 1 ENTRY) ---")
-                    logger.info("RECORDS FOR THIS FILE:", records_for_this_file)
+                    logger.info(f"RECORDS FOR THIS FILE: {records_for_this_file}")
                     record = records_for_this_file[0]
+                    logger.info(f"RECORD[0]: {record}")
                     values_list = []
                     for item in parsed_data_list:
                         value = item.get("value")
@@ -703,12 +708,14 @@ async def do_dynamic_extraction_work(
                             values_list.append('N/A')
                     
                     # Store based on count
+                    logger.info(f"Before adding to record, {record.data}")
                     if len(values_list) >= 1:
                         record.data[safe_field_name] = values_list      # ← Array
                     else:
                         record.data[safe_field_name] = None              # ← No value found
-                
-                    
+                    logger.info(f"After adding to record, {record.data}")
+
+                    logger.info(f"Tagging {record} as modified")
                     flag_modified(record, "data")
                     records_updated_count += 1
                     all_new_values.extend(values_list)
@@ -760,14 +767,14 @@ async def do_dynamic_extraction_work(
         await db.refresh(session)
 
         # Manually serialize the data
-        serialized_records = []
-        for rec in updated_records_list:
-            await db.refresh(rec)
-            serialized_records.append(rec.to_dict())
+        # serialized_records = []
+        # for rec in updated_records_list:
+        #     await db.refresh(rec)
+        #     serialized_records.append(rec.to_dict())
         
         # 6. Finalize Job
         message = f"Successfully added '{field_name}' to {records_updated_count} records."
-        sample_values = [v for v in all_new_values if v is not None][:3]
+        sample_values = [v for v in all_new_values]
         
         final_result = DynamicColumnResponse(
             success=True,
