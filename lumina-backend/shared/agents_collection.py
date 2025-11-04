@@ -86,6 +86,7 @@ class CustomLitellmModel(LitellmModel):
     def __init__(self):
         super().__init__(model="openai/default_model", api_key="fake_key_for_ollama", base_url="http://localhost:8080/v1")
 
+
 # A custom class to choose either extraction LLM model or CustomLitellmModel based on some condition
 class LitellmModelSelector:
     @staticmethod
@@ -116,6 +117,13 @@ class LitellmModelSelector:
 # here's how to use the selector
 # model = LitellmModelSelector.get_model(use_custom=True)  # to use Custom
 
+class LitellmModelSelector:
+    @staticmethod
+    def get_model(use_custom: bool = False) -> LitellmModel:
+        if use_custom:
+            return 'gpt-5-mini'
+        else:
+            return 'gpt-4o'
 class CustomAgentHooks(AgentHooks):
     def __init__(self, display_name: str):
         self.event_counter = 0
