@@ -3,7 +3,8 @@
 <p align="center">
   <img src="assets/lumina-banner.png" alt="Lumina - Document Intelligence Platform" width="600"/>
 </p>
-### *From Unstructured Chaos to Structured Insight | Multi-Agent Document Intelligence*
+
+### **From Unstructured Chaos to Structured Insight | Multi-Agent Document Intelligence**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688?logo=fastapi&logoColor=white)]()
 [![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)]()
