@@ -215,6 +215,7 @@ export const getExtractedData = async (sessionId: string | number): Promise<Extr
     // NOTE: You might need to adjust this endpoint to match your backend!
     // This endpoint should return the full { records: [], fields: [], ... } object.
     const response = await apiClient.get<ExtractedData>(`/session/${sessionId}/data`);
+    console.log('📬 Received extracted data (utils/api.py - L218):', response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching extracted data:", error);

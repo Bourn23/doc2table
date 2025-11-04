@@ -452,14 +452,14 @@ export const useAppStore = create<AppState>((set, get) => ({
       return;
     }
 
-    console.log('🔄 Fetching updated extracted data...');
+    console.log('🔄 Fetching (borna) updated extracted data...');
     // You could set a specific loading phase if you want
     set({ phase: AppPhase.QUERYING }); 
 
     try {
       // Call the function we just made in api.ts
       const newData = await api.getExtractedData(sessionId);
-      
+      console.log(">> NEW DATA IN fetchExtractedData:", newData);
       set({
         extractedData: newData,
         phase: AppPhase.READY, // Data is loaded, back to ready
@@ -539,8 +539,6 @@ export const useAppStore = create<AppState>((set, get) => ({
         });
 
         // Re-run the original query to get the answer
-        console.log('✅ Dynamic extraction completed:', jobResult);
-
         console.log('✅ Dynamic extraction completed:', jobResult);
 
         // Clear job tracking
