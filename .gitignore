@@ -2,3 +2,5 @@
 *.csv
 *.db
 .env
+nvidia-aws-agentic-ai/
+
