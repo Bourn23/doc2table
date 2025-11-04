@@ -528,8 +528,6 @@ async def do_dynamic_extraction_work(
         files_query = select(models.UploadedFile).where(models.UploadedFile.session_id == session_id)
         session = await db.get(models.Session, session_id)
         
-        # log existing data in the session
-        logger.info(f"Existing session data: {session.data}")
 
         existing_records = (await db.execute(records_query)).scalars().all()
         logger.info(f"--- FETCHED {existing_records} EXISTING RECORDS ---")
