@@ -34,13 +34,13 @@ export const ExplorationView: React.FC = () => {
   // --- DEBUGGING: Log state changes ---
   // This helps you see the exact data structures in the browser's developer console
   // whenever they are updated from the backend or your store.
-  useEffect(() => {
-    console.log('✅ [State Update] Current Result:', currentResult);
-  }, [currentResult]);
+  // useEffect(() => {
+  //   console.log('✅ [State Update] Current Result:', currentResult);
+  // }, [currentResult]);
 
-  useEffect(() => {
-    console.log('✅ [State Update] Extracted Data:', extractedData);
-  }, [extractedData]);
+  // useEffect(() => {
+  //   console.log('✅ [State Update] Extracted Data:', extractedData);
+  // }, [extractedData]);
   // ------------------------------------
 
   const handleSubmit = (e: React.FormEvent) => {

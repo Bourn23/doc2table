@@ -458,7 +458,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
     try {
       // Call the function we just made in api.ts
-      const newData = await api.getExtractedData(sessionId);
+      const newData = await api.getExtractedData(sessionId); // utils/api.py
       console.log(">> NEW DATA IN fetchExtractedData:", newData);
       set({
         extractedData: newData,
@@ -528,17 +528,6 @@ export const useAppStore = create<AppState>((set, get) => ({
           });
         });
 
-        console.log('✅ Dynamic extraction completed:', jobResult);
-
-        // Clear job tracking
-        set({
-          currentJobId: null,
-          currentJobService: null,
-          jobStatus: null,
-          jobMessage: null,
-        });
-
-        // Re-run the original query to get the answer
         console.log('✅ Dynamic extraction completed:', jobResult);
 
         // Clear job tracking

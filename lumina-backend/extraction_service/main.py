@@ -177,6 +177,7 @@ def _build_extraction_prompt(
         f"Description: {field_description}\n"
         f"Type: {field_type}{examples_text}\n\n"
         "If the information is not found in the document, return None.\n"
+        "If the field name is not pythonic, write it in snake_case.\n"
     )
 
 
@@ -541,11 +542,11 @@ async def do_dynamic_extraction_work(
             if not source_doc:
                 logger.warning(f"Record {record.id} missing _source_document field.")
                 continue
-            logger.info(f"Record {record.id} maps to source: '{source_doc}'")
+            # logger.info(f"Record {record.id} maps to source: '{source_doc}'")
             if source_doc not in records_by_file:
                 records_by_file[source_doc] = []
             records_by_file[source_doc].append(record)
-        logger.info(f"--- MAP CONTENTS: {records_by_file} ---")
+        # logger.info(f"--- MAP CONTENTS: {records_by_file} ---")
         
         logger.info(f"Found {len(existing_records)} records and {len(uploaded_files)} files.")
 
@@ -584,7 +585,7 @@ async def do_dynamic_extraction_work(
                 continue
             # --- END LOG ---
 
-            logger.info(f"Creating task for {file_record.filename} with {len(records_for_this_file)} records.")
+            # logger.info(f"Creating task for {file_record.filename} with {len(records_for_this_file)} records.")
 
             # --- START NEW PROMPT LOGIC ---
             
@@ -636,15 +637,16 @@ async def do_dynamic_extraction_work(
         )
             # We now also pass the list of records, so we can build a map later
             tasks.append((file_record.filename, task, records_for_this_file))
-        logger.info(f">> Task list is {tasks}")
+        # logger.info(f">> Task list is {tasks}")
         # list only for task objectives
         extraction_tasks_to_run = [task_tuple[1] for task_tuple in tasks]    
-        logger.info(f">> Extraction tasks to run: {extraction_tasks_to_run}")
+        # logger.info(f">> Extraction tasks to run: {extraction_tasks_to_run}")
         extraction_results = await asyncio.gather(
             *extraction_tasks_to_run, 
             return_exceptions=True
         )
-
+        logger.warning(f"EXTRACTION RESULTS {extraction_results}")
+        
         # 4. Process results and map them to existing records
         all_new_values = []
         extraction_errors = []
@@ -657,7 +659,7 @@ async def do_dynamic_extraction_work(
             for record in records_in_file:
                 all_records_by_id[f"record_{record.id}"] = record
         # --- END NEW MAPPING LOGIC ---
-        logger.warning(f"EXTRACTION RESULTS {extraction_results}")
+        
         for idx, result in enumerate(extraction_results):
             filename = tasks[idx][0]
             record_for_this_file = tasks[idx][2]
@@ -679,19 +681,15 @@ async def do_dynamic_extraction_work(
                 # The agent returns {'results': [ { 'extracted_data': [ {value: V, record_id: ID}, ... ] } ]}
                 parsed_data_list = result.get("results", [{}])[0].get("extracted_data", [])
                 
-                # --- ADD THIS CHECK ---
                 if not parsed_data_list:
                     logger.warning(f"Agent returned no data for {filename}. Parsed list is empty.")
                     extraction_errors.append({"filename": filename, "error": "Agent returned no data"})
                     continue
-                # --- END ADD ---
-                
-                if not parsed_data_list:
-                    logger.warning(f"Agent returned no data for {filename}.")
-                    continue
 
                 # Loop through the (value, record_id) pairs
-                if len(records_for_this_file) == 1:
+                if len(records_for_this_file) == 1: # got until here
+                    logger.info("--- MAPPING SINGLE RECORD (EXTRACTED COL HAS 1 ENTRY) ---")
+                    logger.info("RECORDS FOR THIS FILE:", records_for_this_file)
                     record = records_for_this_file[0]
                     values_list = []
                     for item in parsed_data_list:
@@ -701,11 +699,11 @@ async def do_dynamic_extraction_work(
                                 values_list.extend(value)
                             else:
                                 values_list.append(value)
+                        else:
+                            values_list.append('N/A')
                     
                     # Store based on count
-                    if len(values_list) == 1:
-                        record.data[safe_field_name] = values_list[0]  # ← Single string
-                    elif len(values_list) > 1:
+                    if len(values_list) >= 1:
                         record.data[safe_field_name] = values_list      # ← Array
                     else:
                         record.data[safe_field_name] = None              # ← No value found
@@ -716,8 +714,10 @@ async def do_dynamic_extraction_work(
                     all_new_values.extend(values_list)
                     updated_records_list.append(record)
                     logger.info(f"Stored {len(values_list)} value(s) in single record for {filename}")  # ← Change log message
+                    logger.info(f"Adding Values: {values_list} to record ID: {result['filename']}")
                 else:
                     # Multiple records → map value to each record by record_id
+                    logger.info("--- MAPPING MULTIPLE RECORDS ---")
                     for item in parsed_data_list:
                         value = item.get("value")
                         record_id = item.get("record_id")
