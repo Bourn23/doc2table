@@ -119,7 +119,7 @@ class LitellmModelSelector:
 
 class LitellmModelSelector:
     @staticmethod
-    def get_model(use_custom: bool = False) -> LitellmModel:
+    def get_model(use_custom: bool = False):
         if use_custom:
             return 'gpt-5-mini'
         else:
