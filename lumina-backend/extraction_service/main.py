@@ -667,6 +667,7 @@ async def do_dynamic_extraction_work(
         for idx, result in enumerate(extraction_results):
             filename = tasks[idx][0]
             record_for_this_file = tasks[idx][2]
+            logger.info(f"RECORD FOR THIS FILE {filename}: {record_for_this_file}")
             # --- ADD THIS LOGGING ---
             logger.info(f"--- RAW AGENT RESULT FOR {filename} ---")
             logger.info(result)
