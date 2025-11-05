@@ -42,7 +42,7 @@ from shared.utils import run_agent_gracefully
 from shared.rag_agent import RAGSystem
 from shared.database import settings
 from shared.utils import create_text_chunks_from_data, create_column_chunks_from_data
-INDEXES_DIR = Path("indexes")
+INDEXES_DIR = Path("/data/indexes")
 
 
 # ============================================================================
