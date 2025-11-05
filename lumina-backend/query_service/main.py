@@ -58,7 +58,7 @@ app = FastAPI(
 )
 
 job_manager = JobStatusManager()
-INDEXES_DIR = Path("indexes")
+INDEXES_DIR = Path("/data/indexes")
 RAG_SYSTEMS_CACHE: Dict[str, RAGSystem] = {} # In-memory cache for loaded indexes
 
 # ============================================================================
