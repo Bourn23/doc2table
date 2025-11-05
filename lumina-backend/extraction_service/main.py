@@ -44,7 +44,6 @@ from shared.database import settings
 from shared.utils import create_text_chunks_from_data, create_column_chunks_from_data
 INDEXES_DIR = Path("/data/indexes")
 
-
 # ============================================================================
 # Service Setup
 # ============================================================================

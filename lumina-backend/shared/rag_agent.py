@@ -215,8 +215,7 @@ class RAGSystem:
                 continue
 
         if not embeddings:
-            print("No embeddings were generated.")
-            return None
+            raise ValueError("No embeddings were generated for the provided chunks.")
 
         # Convert to NumPy array
         embedding_array = np.array(embeddings, dtype=np.float32)
