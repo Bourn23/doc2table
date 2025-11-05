@@ -68,7 +68,7 @@ services:
       - ./shared:/app/shared
       - ./extraction_service:/app
       - uploaded_files_volume:/data/uploaded_files
-      - indexes_volume:/data/indexes
+      - indexed_volume:/data/indexes
       - exports_data:/data/exports
     environment:
       - PYTHONPATH=/app
@@ -89,7 +89,7 @@ services:
       - ./shared:/app/shared
       - ./query_service:/app
       - uploaded_files_volume:/data/uploaded_files
-      - indexes_volume:/data/indexes ## RAG indexes storage
+      - indexed_volume:/data/indexes ## RAG indexes storage
       - exports_data:/data/exports
     environment:
       - PYTHONPATH=/app
