@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 import traceback
 import asyncio
 import re
@@ -36,6 +37,13 @@ from shared.agents_collection import (
 import pydantic
 from pydantic import BaseModel
 from shared.utils import run_agent_gracefully
+
+# Indexing columns for do_dynamic_extraction_work
+from shared.rag_agent import RAGSystem
+from shared.database import settings
+from shared.utils import create_text_chunks_from_data, create_column_chunks_from_data
+INDEXES_DIR = Path("indexes")
+
 
 # ============================================================================
 # Service Setup
@@ -770,6 +778,75 @@ async def do_dynamic_extraction_work(
         # for rec in updated_records_list:
         #     await db.refresh(rec)
         #     serialized_records.append(rec.to_dict())
+        
+        # 6. Fetch all updated data for indexing
+        await job_manager.update_status(job_id, "PROCESSING", "Fetching updated data for indexing...")
+        
+        # We need the full, updated dataset to re-index
+        query = select(models.ExtractedRecord).where(models.ExtractedRecord.session_id == session_id)
+        result = await db.execute(query)
+        all_records_data = [r.data for r in result.scalars().all()] # This now contains the new field
+
+        if not all_records_data:
+            logger.warning("No records found after update, skipping indexing.")
+        else:
+            # 7. Create the new Column-wise Index
+            await job_manager.update_status(job_id, "PROCESSING", f"Creating index for new column '{safe_field_name}'...")
+            
+            # Use the same chunking function as the main indexer
+            column_chunks_map = create_column_chunks_from_data(all_records_data, [safe_field_name])
+            new_col_chunk_text = column_chunks_map.get(safe_field_name)
+
+            if new_col_chunk_text:
+                col_rag = RAGSystem(
+                    embed_api_key=settings.NVIDIA_EMBED_API_KEY,
+                    rerank_api_key=settings.NVIDIA_RERANK_API_KEY,
+                    gemini_api_key=settings.GOOGLE_GEMINI_API_KEY
+                )
+                await asyncio.to_thread(col_rag.index_documents, 
+                                        [new_col_chunk_text],
+                                        base_metadata={
+                                            "session_id": session_id,
+                                            "index_type": f"column_wise",
+                                            "column_name": safe_field_name
+                                        },
+                                        per_chunk_metadata=[{"column_name": safe_field_name}]
+                                    )
+                
+                col_path = INDEXES_DIR / str(session_id) / f"column_{safe_field_name}"
+                await asyncio.to_thread(col_rag.save_index, str(col_path))
+                logger.info(f"Saved new column-wise index for '{safe_field_name}' to {col_path}")
+            else:
+                logger.warning(f"No data found for new column '{safe_field_name}', skipping column index.")
+
+            # 8. Rebuild the Row-wise Index (it's now stale)
+            await job_manager.update_status(job_id, "PROCESSING", "Rebuilding row-wise index with new data...")
+            
+            row_chunks = create_text_chunks_from_data(all_records_data)
+            row_wise_rag = RAGSystem(
+                embed_api_key=settings.NVIDIA_EMBED_API_KEY,
+                rerank_api_key=settings.NVIDIA_RERANK_API_KEY,
+                gemini_api_key=settings.GOOGLE_GEMINI_API_KEY
+            )
+            per_chunk_meta = [{"row_index": i} for i in range(len(row_chunks))]
+            
+            # This will create a *new* index from scratch with the updated data
+            await asyncio.to_thread(
+                row_wise_rag.index_documents, 
+                row_chunks,
+                base_metadata={
+                    "session_id": session_id,
+                    "index_type": "row_wise",
+                },
+                per_chunk_metadata=per_chunk_meta,
+            )
+            
+            row_wise_path = INDEXES_DIR / str(session_id) / "row_wise"
+            row_wise_path.parent.mkdir(parents=True, exist_ok=True)
+            # This will overwrite the old, stale row-wise index
+            await asyncio.to_thread(row_wise_rag.save_index, str(row_wise_path))
+            logger.info(f"Successfully rebuilt and saved row-wise index to {row_wise_path}")
+        
         
         # 6. Finalize Job
         message = f"Successfully added '{field_name}' to {records_updated_count} records."
