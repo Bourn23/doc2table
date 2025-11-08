@@ -1,0 +1,9 @@
+{
+    "setup_timestamp": "2025-11-08T13:31:30Z",
+    "aws_region": "us-east-1",
+    "aws_account": "945670036613",
+    "cluster_name": "lumina-nim-cluster",
+    "node_type": "g6e.xlarge",
+    "instance_type": "g5.xlarge",
+    "estimated_daily_cost": 77
+}

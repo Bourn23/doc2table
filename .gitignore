@@ -1,6 +1,22 @@
+# AWS Key Pairs - NEVER commit these!
+*.pem
+
+# Environment files with instance info
+backend-instance-personal.env
+backend-instance-free-tier.env
+nim-endpoint.env
+.env
+.env.personal
+
+# AWS credentials
+.aws/
+credentials
+
+# Data files
 *.pdf
 *.csv
 *.db
-.env
+
+# Deployment directories
 lumina-deploy/
 scripts/

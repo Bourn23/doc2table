@@ -27,6 +27,33 @@ if [ ! -d "lumina-frontend-async/dist" ]; then
     exit 1
 fi
 
+# Fix .env.production and rebuild if needed
+echo -e "${BLUE}🔧 Ensuring .env.production is configured correctly...${NC}"
+if [ -f "fix-env-production.sh" ]; then
+    ./fix-env-production.sh
+    
+    # Ask if user wants to rebuild with correct config
+    echo
+    echo -e "${YELLOW}⚠️  The .env.production file has been updated.${NC}"
+    echo -e "${YELLOW}💡 For best results, rebuild the frontend with the new configuration.${NC}"
+    echo
+    read -p "Rebuild frontend now? (recommended) (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${BLUE}Rebuilding frontend...${NC}"
+        cd lumina-frontend-async
+        npm run build
+        cd ..
+        echo -e "${GREEN}✅ Frontend rebuilt with correct configuration${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Skipping rebuild. Post-deployment fixes will be applied instead.${NC}"
+    fi
+else
+    echo -e "${YELLOW}⚠️  fix-env-production.sh not found${NC}"
+    echo -e "${YELLOW}💡 Post-deployment fixes will be applied instead${NC}"
+fi
+echo
+
 echo -e "${YELLOW}📋 Backend URL: $BACKEND_ENDPOINT_URL${NC}"
 
 # Use existing S3 bucket or create new one

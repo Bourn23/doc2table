@@ -23,7 +23,16 @@ else
 fi
 
 echo -e "${YELLOW}📋 Backend URL: $BACKEND_ENDPOINT_URL${NC}"
+
+# Check if frontend is deployed
+if [ -z "$FRONTEND_URL" ] || [ -z "$S3_BUCKET" ]; then
+    echo -e "${RED}❌ Frontend not deployed yet${NC}"
+    echo -e "${YELLOW}💡 Deploy frontend first (option 2 in manage-personal.sh)${NC}"
+    exit 1
+fi
+
 echo -e "${YELLOW}📋 S3 Bucket: $S3_BUCKET${NC}"
+echo -e "${YELLOW}📋 Frontend URL: $FRONTEND_URL${NC}"
 
 # Download current frontend files
 echo -e "${BLUE}📥 Downloading current frontend files...${NC}"

@@ -24,9 +24,15 @@ fi
 
 echo -e "${YELLOW}📋 Backend URL: $BACKEND_ENDPOINT_URL${NC}"
 
-# Extract S3 bucket name from frontend URL
-S3_BUCKET=$(echo $FRONTEND_URL | sed 's|http://||' | sed 's|\.s3-website-us-east-1\.amazonaws\.com||')
+# Check if frontend is deployed
+if [ -z "$FRONTEND_URL" ] || [ -z "$S3_BUCKET" ]; then
+    echo -e "${RED}❌ Frontend not deployed yet${NC}"
+    echo -e "${YELLOW}💡 Deploy frontend first (option 2 in manage-personal.sh)${NC}"
+    exit 1
+fi
+
 echo -e "${YELLOW}📋 S3 Bucket: $S3_BUCKET${NC}"
+echo -e "${YELLOW}📋 Frontend URL: $FRONTEND_URL${NC}"
 
 # Download current frontend files
 echo -e "${BLUE}📥 Downloading current frontend files...${NC}"
@@ -70,6 +76,16 @@ if [ -n "$MAIN_JS_FILE" ]; then
     
     # Replace localhost:8000 with actual backend URL
     sed -i.bak "s|http://localhost:8000|$BACKEND_ENDPOINT_URL|g" "$MAIN_JS_FILE"
+    
+    # Fix relative API paths (like /uploads/initiate, /api/*, etc.)
+    # These need to be full URLs to the backend
+    sed -i.bak "s|/uploads/|$BACKEND_ENDPOINT_URL/uploads/|g" "$MAIN_JS_FILE"
+    sed -i.bak "s|/api/|$BACKEND_ENDPOINT_URL/api/|g" "$MAIN_JS_FILE"
+    
+    # Fix any remaining relative paths that start with /
+    # But be careful not to replace asset paths
+    sed -i.bak "s|axios\.post(\"/|axios.post(\"$BACKEND_ENDPOINT_URL/|g" "$MAIN_JS_FILE"
+    sed -i.bak "s|axios\.get(\"/|axios.get(\"$BACKEND_ENDPOINT_URL/|g" "$MAIN_JS_FILE"
     
     echo -e "${GREEN}✅ Updated API URL in $MAIN_JS_FILE${NC}"
     

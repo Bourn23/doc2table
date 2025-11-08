@@ -11,12 +11,43 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}🚀 Deploying Backend to Personal AWS Account${NC}"
+echo
+echo -e "${YELLOW}⚠️  This will use YOUR AWS credentials and create resources in YOUR account${NC}"
+echo -e "${YELLOW}💰 Estimated cost: ~\$30/month for t3.medium instance${NC}"
+echo
+echo -e "${BLUE}Prerequisites:${NC}"
+echo -e "   • AWS CLI configured with your credentials (run: aws configure)"
+echo -e "   • Or AWS credentials set via environment variables (run: ./setup-environment.sh and once done adding to .env, re-run it; then come back here)"
+echo
+read -p "Press Enter to continue or Ctrl+C to cancel..."
+echo
 
-# Configuration for personal AWS
-KEY_NAME="lumina-backend-key"  # You'll need to create this key pair
-SECURITY_GROUP="lumina-backend-sg"
-INSTANCE_TYPE="t3.medium"  # Cheaper option for personal use
-REGION="us-east-1"  # Change to your preferred region
+# Prompt for configuration
+read -p "Enter AWS region (default: us-east-1): " REGION
+REGION=${REGION:-us-east-1}
+
+read -p "Enter key pair name (default: lumina-backend-key): " KEY_NAME
+KEY_NAME=${KEY_NAME:-lumina-backend-key}
+
+read -p "Enter security group name (default: lumina-backend-sg): " SECURITY_GROUP
+SECURITY_GROUP=${SECURITY_GROUP:-lumina-backend-sg}
+
+read -p "Enter instance type (default: t3.medium): " INSTANCE_TYPE
+INSTANCE_TYPE=${INSTANCE_TYPE:-t3.medium}
+
+echo
+echo -e "${YELLOW}📋 Configuration:${NC}"
+echo -e "   Region: $REGION"
+echo -e "   Key Name: $KEY_NAME"
+echo -e "   Security Group: $SECURITY_GROUP"
+echo -e "   Instance Type: $INSTANCE_TYPE"
+echo
+read -p "Continue with these settings? (y/N): " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "${YELLOW}Deployment cancelled${NC}"
+    exit 0
+fi
 
 # Check if AWS CLI is configured
 if ! aws sts get-caller-identity > /dev/null 2>&1; then

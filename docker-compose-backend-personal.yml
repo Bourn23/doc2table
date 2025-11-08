@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: lumina
+      POSTGRES_PASSWORD: lumina_secure_password_2024
+      POSTGRES_DB: lumina_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lumina -d lumina_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - lumina-network
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - lumina-network
+
+  extraction-service:
+    build: 
+      context: ./lumina-backend
+      dockerfile: ./extraction_service/Dockerfile
+    container_name: extraction-service
+    working_dir: /app/extraction_service
+    command: uvicorn main:app --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./lumina-backend:/app
+      - uploaded_files_volume:/data/uploaded_files
+      - exports_data:/data/exports
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
+      # Use OpenAI or other API instead of NIM for personal deployment
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
+      - LLM_PROVIDER=openai
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - lumina-network
+    env_file:
+      - ./.env
+
+  query-service:
+    build: 
+      context: ./lumina-backend
+      dockerfile: ./query_service/Dockerfile
+    container_name: query-service
+    working_dir: /app/query_service
+    command: uvicorn main:app --host 0.0.0.0 --port 8002
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./lumina-backend:/app
+      - uploaded_files_volume:/data/uploaded_files
+      - exports_data:/data/exports
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
+      - LLM_PROVIDER=openai
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - lumina-network
+    env_file:
+      - ./.env
+
+  api-service:
+    build: 
+      context: ./lumina-backend
+      dockerfile: ./api_service/Dockerfile
+    container_name: api-service
+    ports:
+      - "8000:8000"
+    working_dir: /app/api_service
+    volumes:
+      - ./lumina-backend:/app
+      - uploaded_files_volume:/data/uploaded_files
+      - exports_data:/data/exports
+    environment:
+      - PYTHONPATH=/app
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
+      - EXTRACTION_SERVICE_URL=http://extraction-service:8001
+      - QUERY_SERVICE_URL=http://query-service:8002
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
+      - LLM_PROVIDER=openai
+    depends_on:
+      extraction-service:
+        condition: service_started
+      query-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - lumina-network
+    env_file:
+      - ./.env
+
+networks:
+  lumina-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  uploaded_files_volume:
+  exports_data:

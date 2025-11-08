@@ -175,31 +175,38 @@ EOF
 create_env_file_personal() {
     cat > .env.personal << 'EOF'
 # Database Configuration
-POSTGRES_PASSWORD=lumina_secure_password_2024
-DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
+POSTGRES_PASSWORD=lumina_postgres_password_2025
+DATABASE_URL=postgresql+asyncpg://lumina:lumina_postgres_password_2025@postgres:5432/lumina_db
 REDIS_URL=redis://redis:6379
 
 # Service URLs (using Docker network names)
 EXTRACTION_SERVICE_URL=http://extraction-service:8001
 QUERY_SERVICE_URL=http://query-service:8002
 
-# OpenAI Configuration (replace NIM)
-OPENAI_API_KEY=your_openai_api_key_here
-LLM_PROVIDER=openai
-LLM_MODEL=gpt-3.5-turbo
-
-# Google API Key (optional)
-GOOGLE_GEMINI_API_KEY=your_google_api_key_here
-
 # Application Configuration
 PYTHONPATH=/app
 EXPORTS_BUCKET_NAME=lumina-exports-bucket
+
+# LLM Configurations
+# Set your single, primary NVIDIA API key here
+NVIDIA_API_KEY="YOUR-NVIDIA-API-KEY-HERE"
+
+# These variables will re-use the key from above
+NVIDIA_EMBED_API_KEY=$NVIDIA_API_KEY
+NVIDIA_RERANK_API_KEY=$NVIDIA_API_KEY
+NVIDIA_NIM_API_KEY=$NVIDIA_API_KEY
+
+# Your Google Gemini API Key
+GOOGLE_GEMINI_API_KEY="YOUR-GOOGLE-API-KEY-HERE"
+
+# LLM Models
+GRAPH_LLM_MODEL="nvidia/llama-3.1-nemotron-nano-8b-v1"
+
 
 # Neo4j Configuration (optional)
 NEO4J_URL=neo4j://127.0.0.1:7687
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_neo4j_password
-GRAPH_LLM_MODEL=gpt-3.5-turbo
 EOF
 }
 
@@ -267,10 +274,10 @@ main() {
     
     echo -e "${GREEN}🎉 Deployment to personal AWS instance completed!${NC}"
     echo -e "${BLUE}📋 Backend endpoint: http://$PUBLIC_IP:8000${NC}"
-    echo -e "${YELLOW}💡 Important: Update your .env file with your API keys:${NC}"
-    echo -e "   - OPENAI_API_KEY (for LLM functionality)"
-    echo -e "   - GOOGLE_GEMINI_API_KEY (optional)"
-    echo -e "${YELLOW}💡 SSH to instance: ssh -i ${KEY_NAME}.pem ec2-user@$PUBLIC_IP${NC}"
+    echo -e "${YELLOW}💡 Important: Your build has failed because you need to update your .env file with your API keys:${NC}"
+    echo -e "   - NVIDIA_API_KEY (for Router, LLM functionality)"
+    echo -e "   - GOOGLE_GEMINI_API_KEY (for extraction LLM functionality)"
+    echo -e "${YELLOW}💡 To update the .env file, open a new terminal and SSH to instance: ssh -i ${KEY_NAME}.pem ec2-user@$PUBLIC_IP${NC}"
     echo -e "${YELLOW}💰 Remember to stop the instance when not in use to save costs${NC}"
 }
 
