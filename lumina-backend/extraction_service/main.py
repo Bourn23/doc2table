@@ -62,6 +62,14 @@ app = FastAPI(
 
 job_manager = JobStatusManager()
 
+# Log startup information
+logger.info(f"🚀 Extraction Service starting up")
+logger.info(f"📁 INDEXES_DIR: {INDEXES_DIR}")
+logger.info(f"📁 INDEXES_DIR exists: {INDEXES_DIR.exists()}")
+if INDEXES_DIR.exists():
+    sessions = [f.name for f in INDEXES_DIR.iterdir() if f.is_dir()]
+    logger.info(f"📁 Available sessions: {sessions}")
+
 # ============================================================================
 # Helper & Utility Functions
 # ============================================================================
@@ -537,7 +545,7 @@ async def do_dynamic_extraction_work(
         
 
         existing_records = (await db.execute(records_query)).scalars().all()
-        logger.info(f"--- FETCHED {existing_records} EXISTING RECORDS ---")
+        # logger.info(f"--- FETCHED {existing_records} EXISTING RECORDS ---")
         uploaded_files = (await db.execute(files_query)).scalars().all()
 
         if not existing_records or not uploaded_files or not session:
@@ -545,7 +553,7 @@ async def do_dynamic_extraction_work(
         
         # Create a mapping from filename to record for easy updating later
         records_by_file = {}
-        logger.info(f"--- BUILDING records_by_file MAP FOR {len(existing_records)} RECORDS ---")
+        # logger.info(f"--- BUILDING records_by_file MAP FOR {len(existing_records)} RECORDS ---")
         for record in existing_records:
             source_doc = record.data.get("_source_document")
             if not source_doc:
@@ -557,7 +565,7 @@ async def do_dynamic_extraction_work(
             records_by_file[source_doc].append(record)
         # logger.info(f"--- MAP CONTENTS: {records_by_file} ---")
         
-        logger.info(f"Found {len(existing_records)} records and {len(uploaded_files)} files.")
+        # logger.info(f"Found {len(existing_records)} records and {len(uploaded_files)} files.")
 
         # 2. Generate and create the Pydantic model for the single new field
         await job_manager.update_status(job_id, "PROCESSING", f"Generating schema for new field '{field_name}'...")
@@ -672,10 +680,10 @@ async def do_dynamic_extraction_work(
         for idx, result in enumerate(extraction_results):
             filename = tasks[idx][0]
             record_for_this_file = tasks[idx][2]
-            logger.info(f"RECORD FOR THIS FILE {filename}: {record_for_this_file}")
+            # logger.info(f"RECORD FOR THIS FILE {filename}: {record_for_this_file}")
             # --- ADD THIS LOGGING ---
-            logger.info(f"--- RAW AGENT RESULT FOR {filename} ---")
-            logger.info(result)
+            # logger.info(f"--- RAW AGENT RESULT FOR {filename} ---")
+            # logger.info(result)
             # --- END ADD ---
             if isinstance(result, Exception):
                 logger.error(f"Dynamic extraction failed for {filename}: {str(result)}")
@@ -698,10 +706,10 @@ async def do_dynamic_extraction_work(
 
                 # Loop through the (value, record_id) pairs
                 if len(records_for_this_file) == 1: # got until here
-                    logger.info("--- MAPPING SINGLE RECORD (EXTRACTED COL HAS 1 ENTRY) ---")
-                    logger.info(f"RECORDS FOR THIS FILE: {records_for_this_file}")
+                    # logger.info("--- MAPPING SINGLE RECORD (EXTRACTED COL HAS 1 ENTRY) ---")
+                    # logger.info(f"RECORDS FOR THIS FILE: {records_for_this_file}")
                     record = record_for_this_file[0]
-                    logger.info(f"RECORD[0]: {record}")
+                    # logger.info(f"RECORD[0]: {record}")
                     values_list = []
                     for item in parsed_data_list:
                         value = item.get("value")
@@ -813,8 +821,25 @@ async def do_dynamic_extraction_work(
                                     )
                 
                 col_path = INDEXES_DIR / str(session_id) / f"column_{safe_field_name}"
+                col_path.parent.mkdir(parents=True, exist_ok=True)
                 await asyncio.to_thread(col_rag.save_index, str(col_path))
                 logger.info(f"Saved new column-wise index for '{safe_field_name}' to {col_path}")
+                
+                # Verify the index was saved and log directory contents
+                if col_path.exists():
+                    logger.info(f"✅ Verified: Index directory exists at {col_path}")
+                    index_files = list(col_path.iterdir())
+                    logger.info(f"Index contains {len(index_files)} files: {[f.name for f in index_files]}")
+                else:
+                    logger.error(f"❌ Index directory NOT found at {col_path} after save!")
+                
+                # Log all indexes in session directory
+                session_indexes_dir = INDEXES_DIR / str(session_id)
+                if session_indexes_dir.exists():
+                    all_indexes = [f.name for f in session_indexes_dir.iterdir() if f.is_dir()]
+                    logger.info(f"All indexes in session {session_id}: {all_indexes}")
+                else:
+                    logger.warning(f"Session indexes directory does not exist: {session_indexes_dir}")
             else:
                 logger.warning(f"No data found for new column '{safe_field_name}', skipping column index.")
 

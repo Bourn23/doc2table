@@ -512,35 +512,54 @@ export const ExplorationView: React.FC = () => {
                         const cellValue = row[field.name] ?? null;
                         let displayValue;
 
-                        if (cellValue === null) {
+                        if (cellValue === null || cellValue === undefined) {
                           displayValue = '';
                         } else if (Array.isArray(cellValue)) {
-                          // If it's an array with one item, just show the item
-                          if (cellValue.length === 1) {
-                            displayValue = String(cellValue[0]);
+                          // Handle arrays - check if items are objects or primitives
+                          if (cellValue.length === 0) {
+                            displayValue = '';
+                          } else if (cellValue.length === 1) {
+                            // Single item - check if it's an object
+                            if (typeof cellValue[0] === 'object' && cellValue[0] !== null) {
+                              displayValue = JSON.stringify(cellValue[0], null, 2);
+                            } else {
+                              displayValue = String(cellValue[0]);
+                            }
                           } else {
-                            // Multiple items: show as formatted list or JSON
-                            displayValue = cellValue.join(', '); // or JSON.stringify(cellValue)
+                            // Multiple items - check if they're objects
+                            const firstItem = cellValue[0];
+                            if (typeof firstItem === 'object' && firstItem !== null) {
+                              // Array of objects - show as formatted JSON
+                              displayValue = JSON.stringify(cellValue, null, 2);
+                            } else {
+                              // Array of primitives - join with commas
+                              displayValue = cellValue.join(', ');
+                            }
                           }
                         } else if (typeof cellValue === 'object') {
-                          displayValue = JSON.stringify(cellValue);
+                          // Plain object - stringify with formatting
+                          displayValue = JSON.stringify(cellValue, null, 2);
                         } else {
                           displayValue = String(cellValue);
                         }
                         
+                        const isComplexData = typeof cellValue === 'object' && cellValue !== null;
+                        
                         return (
                           <td
                             key={field.name}
-                            className="px-6 py-4 truncate-cell"
+                            className="px-6 py-4"
                             title={displayValue} // Tooltip for full content
                             style={{
                               fontSize: typography.sizes.body,
                               color: colors.text.primary,
-                              fontFamily: (typeof cellValue === 'number' || typeof cellValue === 'object')
+                              fontFamily: (typeof cellValue === 'number' || isComplexData)
                                 ? typography.fonts.mono
                                 : typography.fonts.primary,
-                              // whiteSpace: 'pre-wrap', // Good for showing stringified JSON
-                              // wordBreak: 'break-word', // Prevents long strings from breaking layout
+                              whiteSpace: isComplexData ? 'pre-wrap' : 'normal',
+                              wordBreak: 'break-word',
+                              maxWidth: isComplexData ? '400px' : 'auto',
+                              verticalAlign: 'top',
                             }}
                           >
                             {displayValue}

@@ -79,6 +79,7 @@ services:
     volumes:
       - ./lumina-backend:/app
       - uploaded_files_volume:/data/uploaded_files
+      - indexed_volume:/data/indexes
       - exports_data:/data/exports
     environment:
       - PYTHONPATH=/app
@@ -109,6 +110,7 @@ services:
     volumes:
       - ./lumina-backend:/app
       - uploaded_files_volume:/data/uploaded_files
+      - indexed_volume:/data/indexes
       - exports_data:/data/exports
     environment:
       - PYTHONPATH=/app
@@ -167,6 +169,7 @@ networks:
 volumes:
   postgres_data:
   uploaded_files_volume:
+  indexed_volume:
   exports_data:
 EOF
 }

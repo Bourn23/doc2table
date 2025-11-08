@@ -61,6 +61,14 @@ job_manager = JobStatusManager()
 INDEXES_DIR = Path("/data/indexes")
 RAG_SYSTEMS_CACHE: Dict[str, RAGSystem] = {} # In-memory cache for loaded indexes
 
+# Log startup information
+logger.info(f"🚀 Query Service starting up")
+logger.info(f"📁 INDEXES_DIR: {INDEXES_DIR}")
+logger.info(f"📁 INDEXES_DIR exists: {INDEXES_DIR.exists()}")
+if INDEXES_DIR.exists():
+    sessions = [f.name for f in INDEXES_DIR.iterdir() if f.is_dir()]
+    logger.info(f"📁 Available sessions: {sessions}")
+
 # ============================================================================
 # Neo4j & Graph Transformer Setup
 # ============================================================================
@@ -154,8 +162,18 @@ async def get_or_load_rag_system(session_id: int, index_name: str) -> RAGSystem:
         return RAG_SYSTEMS_CACHE[cache_key]
 
     index_path = INDEXES_DIR / str(session_id) / index_name
+    
+    # Log what files we can see for debugging
+    session_dir = INDEXES_DIR / str(session_id)
+    if session_dir.exists():
+        available_indexes = [f.name for f in session_dir.iterdir() if f.is_dir()]
+        logger.info(f"Available indexes in session {session_id}: {available_indexes}")
+    else:
+        logger.warning(f"Session directory does not exist: {session_dir}")
+        logger.info(f"INDEXES_DIR contents: {[f.name for f in INDEXES_DIR.iterdir()] if INDEXES_DIR.exists() else 'INDEXES_DIR does not exist'}")
+    
     if not index_path.exists():
-        raise HTTPException(status_code=404, detail=f"Index '{index_name}' not found for session {session_id}.")
+        raise HTTPException(status_code=404, detail=f"Index '{index_name}' not found for session {session_id}. Available: {available_indexes if session_dir.exists() else 'none'}")
 
     logger.info(f"Loading RAG system from '{index_path}' into cache...")
     rag_system = RAGSystem(
@@ -341,6 +359,10 @@ async def merge_column_query_results(
         "result_type": "rag",
     }
 
+def sanitize_field_name(field_name: str) -> str:
+    """Sanitize field name to match the format used when saving indexes."""
+    return field_name.strip().replace(" ", "_").replace("-", "_")
+
 async def _query_single_column(
     session_id: int, 
     column_name: str, 
@@ -351,7 +373,9 @@ async def _query_single_column(
     Async helper to query one RAG index.
     Returns None if a specific column query fails.
     """
-    index_name = f"column_{column_name}"
+    # Sanitize column name to match the format used when saving indexes
+    safe_column_name = sanitize_field_name(column_name)
+    index_name = f"column_{safe_column_name}"
     async with rag_semaphore:
         logger.info(f"Starting query for column: {column_name} (Semaphore acquired)")
         try:
