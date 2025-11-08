@@ -84,7 +84,7 @@ export class JobManager {
           this.options.onUpdate?.(update);
 
           // Check if job is complete
-          if (update.status === 'COMPLETED') {
+          if (update.status === 'COMPLETED' || update.status === 'COMPLETED_WITH_WARNING') {
             this.isComplete = true;
             this.options.onComplete?.(update.result);
             this.cleanup();
@@ -141,7 +141,7 @@ export class JobManager {
         this.options.onUpdate?.(update);
 
         // Check if job is complete
-        if (update.status === 'COMPLETED') {
+        if (update.status === 'COMPLETED' || update.status === 'COMPLETED_WITH_WARNING') {
           this.isComplete = true;
           this.options.onComplete?.(update.result);
           this.cleanup();

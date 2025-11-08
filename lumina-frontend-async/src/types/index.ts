@@ -18,7 +18,7 @@ export enum AppPhase {
 /**
  * Job Status Types for Async Operations
  */
-export type JobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+export type JobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'COMPLETED_WITH_WARNING' | 'FAILED';
 
 export interface JobResponse {
   job_id: string;
