@@ -368,6 +368,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       });
 
       // Track indexing job
+      let indexingWarning: string | null = null;
       await trackJob(indexResponse.job_id, (update) => {
         console.log('📊 Indexing progress:', update);
         set({
@@ -377,6 +378,11 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         if (update.status === 'PROCESSING') {
           get().setProcessingStep(4);
+        }
+
+        // Capture warning if indexing failed but extraction succeeded
+        if (update.status === 'COMPLETED_WITH_WARNING') {
+          indexingWarning = update.message;
         }
       });
 
@@ -394,6 +400,7 @@ export const useAppStore = create<AppState>((set, get) => ({
             totalRecords: extractionResult.total_records || 0,
             source: get().uploadedFiles[0]?.name || 'unknown',
             extractedAt: new Date().toISOString(),
+            indexingWarning: indexingWarning || undefined, // Add warning if present
           }
         },
         phase: AppPhase.READY,

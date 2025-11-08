@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Send, Sparkles, ExternalLink, Download, Network, Loader2 } from 'lucide-react';
+import { Search, Send, Sparkles, ExternalLink, Download, Network, Loader2, AlertTriangle } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { colors, typography, personalityModes } from '../styles/designTokens';
 import { AppPhase } from '../types';
@@ -96,6 +96,50 @@ export const ExplorationView: React.FC = () => {
     <div className="min-h-screen relative z-10 p-6">
       {/* Error Banner - Shows extraction errors with retry button */}
       <ErrorBanner />
+
+      {/* RAG Unavailable Warning */}
+      {extractedData?.metadata.indexingWarning && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-7xl mx-auto mb-6"
+        >
+          <div
+            className="p-4 rounded-lg border flex items-start gap-3"
+            style={{
+              backgroundColor: `${colors.apollo.secondary}15`,
+              borderColor: `${colors.apollo.secondary}40`,
+            }}
+          >
+            <AlertTriangle 
+              className="w-5 h-5 flex-shrink-0 mt-0.5" 
+              style={{ color: colors.apollo.secondary }} 
+            />
+            <div className="flex-1">
+              <p
+                style={{
+                  fontSize: typography.sizes.bodySmall,
+                  color: colors.text.primary,
+                  fontWeight: typography.weights.medium,
+                  marginBottom: '4px',
+                }}
+              >
+                RAG Search Unavailable
+              </p>
+              <p
+                style={{
+                  fontSize: typography.sizes.caption,
+                  color: colors.text.secondary,
+                  lineHeight: '1.5',
+                }}
+              >
+                Your data was extracted successfully, but semantic search queries are not available. 
+                You can still view, explore, and export your data. Function calls like "Export as CSV" will work normally.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <div className="max-w-7xl mx-auto">
 
@@ -380,7 +424,7 @@ export const ExplorationView: React.FC = () => {
                   <div className="mt-4 flex flex-wrap gap-2">
                     {currentResult.sources.map((source, idx) => (
                       <button
-                        key={source.rowId || idx}
+                        key={source.documentId || idx}
                         className="px-3 py-1 rounded-full text-xs flex items-center gap-1 transition-all hover:scale-105"
                         style={{
                           backgroundColor: `${colors.hermes.cyan}20`,

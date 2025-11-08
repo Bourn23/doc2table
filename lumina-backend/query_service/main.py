@@ -258,7 +258,12 @@ async def do_indexing_work(session_id: int, job_id: str):
 
     except Exception as e:
         logger.error(f"Indexing job {job_id} failed", exc_info=True)
-        await job_manager.update_status(job_id, "FAILED", str(e))
+        # Mark as completed with warning instead of failed - extraction was successful
+        await job_manager.update_status(
+            job_id, 
+            "COMPLETED_WITH_WARNING", 
+            f"Data extraction succeeded, but RAG indexing failed: {str(e)}. You can view and export your data, but semantic search queries will not be available."
+        )
     finally:
         if db:
             await db.close()
@@ -618,13 +623,28 @@ Data Preview (from first record) -- use this to understand data types and conten
                 # Note: Actual filtering logic would depend on how RAGSystem supports it
                 # For now, we just log it.
             
-            rag_system = await get_or_load_rag_system(req.session_id, index_name)
-            pipeline_result = await asyncio.to_thread(
-                rag_system.run_pipeline,
-                query=req.query,
-                rerank_top_k=req.num_results
-            )
-            return QueryResponse(success=True, **rag_to_query_response(pipeline_result))
+            try:
+                rag_system = await get_or_load_rag_system(req.session_id, index_name)
+                pipeline_result = await asyncio.to_thread(
+                    rag_system.run_pipeline,
+                    query=req.query,
+                    rerank_top_k=req.num_results
+                )
+                return QueryResponse(success=True, **rag_to_query_response(pipeline_result))
+            except HTTPException as e:
+                if e.status_code == 404:
+                    # Index not found - RAG is unavailable
+                    return QueryResponse(
+                        success=True,
+                        query=req.query,
+                        answer="I'm sorry, but semantic search is currently unavailable because the data indexing failed during extraction. However, your data was extracted successfully and you can view it in the table below. You can also use function calls like 'Export as CSV' which will work normally.",
+                        confidence=0.0,
+                        sources=[],
+                        relevant_records=[],
+                        result_type="rag"
+                    )
+                else:
+                    raise
 
     except Exception as e:
         logger.error(f"Error during /query for session {req.session_id}", exc_info=True)

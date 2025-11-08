@@ -52,7 +52,7 @@ export interface UploadedFile {
   id: string;
   name: string;
   size: number;
-  status: 'uploading' | 'processing' | 'complete' | 'error';
+  status: 'uploading' | 'processing' | 'complete' | 'error' | 'completed_with_warning';
   progress: number;
   error?: string;
 }
@@ -71,6 +71,7 @@ export interface ExtractedData {
       filename: string;
       error: string;
     }>;
+    indexingWarning?: string; // Warning if RAG indexing failed but extraction succeeded
   };
 }
 
