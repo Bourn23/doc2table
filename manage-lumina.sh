@@ -74,13 +74,15 @@ show_menu() {
     echo -e "${YELLOW}5.${NC} ⏸️  Pause System"
     echo -e "${YELLOW}6.${NC} ▶️  Resume System"
     echo -e "${YELLOW}7.${NC} 🔄 Restart Docker Services (Backend)"
+    echo -e "${YELLOW}8.${NC} 🚀 Redeploy Backend Code"
+    echo -e "${YELLOW}9.${NC} 🌐 Redeploy Frontend"
     echo
-    echo -e "${BLUE}8.${NC} 🧪 Test Endpoints"
-    echo -e "${BLUE}9.${NC} 📋 Show Deployment Info"
-    echo -e "${BLUE}10.${NC} 📜 View Docker Logs (Backend)"
-    echo -e "${BLUE}11.${NC} 🔧 Fix Frontend Issues"
+    echo -e "${BLUE}10.${NC} 🧪 Test Endpoints"
+    echo -e "${BLUE}11.${NC} 📋 Show Deployment Info"
+    echo -e "${BLUE}12.${NC} 📜 View Docker Logs (Backend)"
+    echo -e "${BLUE}13.${NC} 🔧 Fix Frontend Issues"
     echo
-    echo -e "${RED}12.${NC} 🧹 Clean Up All Resources"
+    echo -e "${RED}14.${NC} 🧹 Clean Up All Resources"
     echo
     echo -e "${PURPLE}0.${NC} 🚪 Exit"
     echo
@@ -656,6 +658,168 @@ ENDSSH
     read -p "Press Enter to continue..."
 }
 
+redeploy_backend() {
+    echo -e "${YELLOW}🚀 Redeploy Backend Code${NC}"
+    echo
+    
+    if [ ! -f "backend-instance-personal.env" ]; then
+        echo -e "${RED}❌ No personal backend found${NC}"
+        echo -e "${YELLOW}💡 Deploy backend first (option 2)${NC}"
+        read -p "Press Enter to continue..."
+        return
+    fi
+    
+    source backend-instance-personal.env
+    
+    echo -e "${YELLOW}This will:${NC}"
+    echo -e "  1. Copy updated backend code to: $PUBLIC_IP"
+    echo -e "  2. Rebuild Docker containers"
+    echo -e "  3. Restart all services"
+    echo
+    echo -e "${YELLOW}⏱️  Estimated time: 2-3 minutes${NC}"
+    echo
+    read -p "Continue? (y/N): " -n 1 -r
+    echo
+    
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${BLUE}📁 Copying backend code...${NC}"
+        
+        # Copy updated backend code
+        scp -i ${KEY_NAME}.pem -o StrictHostKeyChecking=no -r lumina-backend ec2-user@$PUBLIC_IP:/home/ec2-user/
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Code copied successfully${NC}"
+        else
+            echo -e "${RED}❌ Failed to copy code${NC}"
+            read -p "Press Enter to continue..."
+            return
+        fi
+        
+        echo -e "${BLUE}🔨 Rebuilding and restarting services...${NC}"
+        
+        # Rebuild and restart on instance
+        ssh -i ${KEY_NAME}.pem -o StrictHostKeyChecking=no ec2-user@$PUBLIC_IP << 'ENDSSH'
+echo "🔨 Rebuilding Docker containers..."
+
+if [ -f "docker-compose-backend.yml" ]; then
+    # Stop existing containers
+    docker compose -f docker-compose-backend.yml down
+    
+    # Rebuild and start
+    docker compose -f docker-compose-backend.yml up -d --build
+    
+    echo "⏳ Waiting for services to start..."
+    sleep 15
+    
+    echo ""
+    echo "📊 Container status:"
+    docker compose -f docker-compose-backend.yml ps
+    
+    echo ""
+    echo "🧪 Testing services..."
+    curl -s http://localhost:8000/ > /dev/null && echo "✅ API Service: OK" || echo "❌ API Service: Failed"
+    curl -s http://localhost:8001/health > /dev/null && echo "✅ Extraction Service: OK" || echo "❌ Extraction Service: Failed"
+    curl -s http://localhost:8002/health > /dev/null && echo "✅ Query Service: OK" || echo "❌ Query Service: Failed"
+else
+    echo "❌ docker-compose-backend.yml not found"
+fi
+ENDSSH
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Backend redeployed successfully${NC}"
+        else
+            echo -e "${RED}❌ Failed to redeploy backend${NC}"
+        fi
+    fi
+    
+    echo
+    read -p "Press Enter to continue..."
+}
+
+redeploy_frontend() {
+    echo -e "${YELLOW}🌐 Redeploy Frontend${NC}"
+    echo
+    
+    if [ ! -f "backend-instance-personal.env" ]; then
+        echo -e "${RED}❌ No backend deployment found${NC}"
+        echo -e "${YELLOW}💡 Deploy backend first (option 2)${NC}"
+        read -p "Press Enter to continue..."
+        return
+    fi
+    
+    source backend-instance-personal.env
+    
+    if [ -z "$FRONTEND_URL" ] || [ -z "$S3_BUCKET" ]; then
+        echo -e "${RED}❌ No frontend deployment found${NC}"
+        echo -e "${YELLOW}💡 Deploy frontend first (option 3)${NC}"
+        read -p "Press Enter to continue..."
+        return
+    fi
+    
+    echo -e "${YELLOW}This will:${NC}"
+    echo -e "  1. Fix .env.production with correct backend URL"
+    echo -e "  2. Rebuild frontend"
+    echo -e "  3. Deploy to S3: $S3_BUCKET"
+    echo
+    echo -e "${YELLOW}⏱️  Estimated time: 1-2 minutes${NC}"
+    echo
+    read -p "Continue? (y/N): " -n 1 -r
+    echo
+    
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        # Fix .env.production
+        echo -e "${BLUE}⚙️  Configuring environment...${NC}"
+        if [ -f "fix-env-production.sh" ]; then
+            ./fix-env-production.sh
+        else
+            echo -e "${YELLOW}⚠️  fix-env-production.sh not found, skipping env fix${NC}"
+        fi
+        
+        # Check if frontend directory exists
+        if [ ! -d "lumina-frontend-async" ]; then
+            echo -e "${RED}❌ lumina-frontend-async directory not found${NC}"
+            read -p "Press Enter to continue..."
+            return
+        fi
+        
+        # Build frontend
+        echo -e "${BLUE}🔨 Building frontend...${NC}"
+        cd lumina-frontend-async
+        
+        if [ ! -d "node_modules" ]; then
+            echo -e "${YELLOW}📦 Installing dependencies...${NC}"
+            npm install
+        fi
+        
+        npm run build
+        
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}❌ Frontend build failed${NC}"
+            cd ..
+            read -p "Press Enter to continue..."
+            return
+        fi
+        
+        cd ..
+        echo -e "${GREEN}✅ Frontend built successfully${NC}"
+        
+        # Deploy to S3
+        echo -e "${BLUE}☁️  Deploying to S3...${NC}"
+        aws s3 sync lumina-frontend-async/dist/ s3://$S3_BUCKET --delete
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Frontend redeployed successfully${NC}"
+            echo -e "${BLUE}📋 Frontend URL: $FRONTEND_URL${NC}"
+            echo -e "${YELLOW}💡 Clear your browser cache (Cmd+Shift+R or Ctrl+Shift+R)${NC}"
+        else
+            echo -e "${RED}❌ Failed to deploy to S3${NC}"
+        fi
+    fi
+    
+    echo
+    read -p "Press Enter to continue..."
+}
+
 view_docker_logs() {
     echo -e "${BLUE}📜 View Docker Logs${NC}"
     echo
@@ -882,7 +1046,7 @@ main() {
         show_status_summary
         show_menu
         
-        read -p "Select an option (0-12): " choice
+        read -p "Select an option (0-14): " choice
         echo
         
         case $choice in
@@ -893,11 +1057,13 @@ main() {
             5) pause_system ;;
             6) resume_system ;;
             7) restart_docker_services ;;
-            8) test_endpoints ;;
-            9) show_deployment_info ;;
-            10) view_docker_logs ;;
-            11) fix_frontend_issues ;;
-            12) clean_up_resources ;;
+            8) redeploy_backend ;;
+            9) redeploy_frontend ;;
+            10) test_endpoints ;;
+            11) show_deployment_info ;;
+            12) view_docker_logs ;;
+            13) fix_frontend_issues ;;
+            14) clean_up_resources ;;
             0) 
                 echo -e "${GREEN}👋 Goodbye!${NC}"
                 exit 0

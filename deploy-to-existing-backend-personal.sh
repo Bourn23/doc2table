@@ -85,9 +85,6 @@ services:
       - PYTHONPATH=/app
       - REDIS_URL=redis://redis:6379
       - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
-      # Use OpenAI or other API instead of NIM for personal deployment
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
-      - LLM_PROVIDER=openai
     depends_on:
       postgres:
         condition: service_healthy
@@ -116,8 +113,6 @@ services:
       - PYTHONPATH=/app
       - REDIS_URL=redis://redis:6379
       - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
-      - LLM_PROVIDER=openai
     depends_on:
       postgres:
         condition: service_healthy
@@ -146,8 +141,6 @@ services:
       - DATABASE_URL=postgresql+asyncpg://lumina:lumina_secure_password_2024@postgres:5432/lumina_db
       - EXTRACTION_SERVICE_URL=http://extraction-service:8001
       - QUERY_SERVICE_URL=http://query-service:8002
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}
-      - LLM_PROVIDER=openai
     depends_on:
       extraction-service:
         condition: service_started
