@@ -387,6 +387,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       });
 
       console.log('✅ Indexing completed');
+      console.log('📦 Extraction result:', extractionResult);
+      console.log('⚠️ Indexing warning:', indexingWarning);
 
       // Step 3: Fetch the final extracted data
       set({
@@ -409,6 +411,8 @@ export const useAppStore = create<AppState>((set, get) => ({
         jobStatus: null,
         jobMessage: null,
       });
+
+      console.log('✅ Phase changed to READY, extracted data set');
 
     } catch (error) {
       console.error('Job error:', error);
