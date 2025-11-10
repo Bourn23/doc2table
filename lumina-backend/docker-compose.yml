@@ -38,6 +38,7 @@ services:
     #   - "8000:8000" # Expose port 8000 on your machine to port 8000 in the container
     volumes:
       - ./shared:/app/shared # Shared code between services
+      - ./lumina_agents:/app/lumina_agents # Agent package
       - ./api_service:/app # Mount local code for live reloading
       - uploaded_files_volume:/data/uploaded_files # Volume for uploaded files
       - exports_data:/data/exports # Volume for exported data
@@ -66,6 +67,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8001 # Run on a different port internally
     volumes:
       - ./shared:/app/shared
+      - ./lumina_agents:/app/lumina_agents # Agent package
       - ./extraction_service:/app
       - uploaded_files_volume:/data/uploaded_files
       - indexed_volume:/data/indexes
@@ -87,6 +89,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8002 # Run on a different port internally
     volumes:
       - ./shared:/app/shared
+      - ./lumina_agents:/app/lumina_agents # Agent package
       - ./query_service:/app
       - uploaded_files_volume:/data/uploaded_files
       - indexed_volume:/data/indexes ## RAG indexes storage

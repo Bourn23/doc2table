@@ -20,12 +20,13 @@ from sqlalchemy.orm.attributes import flag_modified
 import shared.models as models
 from shared.database import get_async_db, settings
 from shared.job_manager import JobStatusManager
-from shared.rag_agent import RAGSystem
+from lumina_agents.rag_agent import RAGSystem
 from shared.api_types import (
     IndexJobRequest, IndexResponse, QueryRequest, QueryResponse,
     GraphGenerationRequest, GraphGenerationResponse, NodeModel, RelationshipModel
 )
-from shared.agents_collection import query_router_agent, process_file_pipeline, synthesis_agent
+from lumina_agents.query_agents import query_router_agent, synthesis_agent
+from lumina_agents.extraction_agents import process_file_pipeline
 from shared.utils import (
     create_text_chunks_from_data, create_column_chunks_from_data,
     run_agent_gracefully, export_to_csv

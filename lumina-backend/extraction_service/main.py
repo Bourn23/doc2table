@@ -23,15 +23,15 @@ from shared.api_types import (
     DynamicColumnResponse, MaxRetriesExceededError 
 )
 
-# Import agent pipelines (assuming this module is accessible)
-from shared.agents_collection import (
+# Import agent pipelines from lumina_agents package
+from lumina_agents.schema_agents import (
     schema_agent,
-    analyze_documents_pipeline,
-    process_file_pipeline,
     pydantic_code_agent,
     extraction_prompt_agent,
     PydanticModelCode
 )
+from lumina_agents.extraction_agents import process_file_pipeline
+from lumina_agents.analysis_agents import analyze_documents_pipeline
 
 # Pydantic and typing imports for dynamic model creation
 import pydantic
@@ -39,7 +39,7 @@ from pydantic import BaseModel
 from shared.utils import run_agent_gracefully
 
 # Indexing columns for do_dynamic_extraction_work
-from shared.rag_agent import RAGSystem
+from lumina_agents.rag_agent import RAGSystem
 from shared.database import settings
 from shared.utils import create_text_chunks_from_data, create_column_chunks_from_data
 INDEXES_DIR = Path("/data/indexes")
