@@ -20,10 +20,10 @@ Get Lumina running in 5 minutes:
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/Bourn23/doc2table.git
 cd lumina
 
-# 2. Configure AWS CLI
+# 2. Configure AWS CLI with your credentials
 aws configure
 
 # 3. Run the deployment script
@@ -32,7 +32,7 @@ chmod +x manage-lumina.sh
 
 # 4. Select Option 2: Deploy Backend
 # 5. Select Option 3: Deploy Frontend
-# 6. Add your API keys (see Deployment Guide below)
+# 6. Add your API keys (see Deployment Guide below) or fire up your own LLM models on EKS
 ```
 
 **That's it!** Your Lumina instance will be live at the S3 URL shown by the script.
@@ -223,38 +223,75 @@ Answer: "TiO2 was synthesized at 350.0°C (paper_1.pdf:record_0)" ✅
 
 ```
 lumina/
-├── api.py                          # FastAPI application
-├── database.py                     # SQLAlchemy async setup
-├── models.py                       # Database models
+├── lumina-backend/                 # Backend microservices
+│   ├── api_service/               # API Gateway (port 8000)
+│   │   ├── main.py               # Orchestrates extraction/query services
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   │
+│   ├── extraction_service/        # Document processing (port 8001)
+│   │   ├── main.py               # Schema generation, data extraction
+│   │   ├── Dockerfile
+│   │   └── converted_markdown/   # Cached converted documents
+│   │
+│   ├── query_service/             # RAG and querying (port 8002)
+│   │   ├── main.py               # Indexing, semantic search
+│   │   ├── Dockerfile
+│   │   └── indexes/              # FAISS vector indexes
+│   │
+│   ├── lumina_agents/             # AI agents package (modular)
+│   │   ├── __init__.py           # Package exports
+│   │   ├── config.py             # Model configuration & selectors
+│   │   ├── tools.py              # Agent tool functions
+│   │   ├── schema_agents.py      # Schema generation agents
+│   │   ├── extraction_agents.py  # Document extraction pipeline
+│   │   ├── analysis_agents.py    # Document classification agents
+│   │   ├── query_agents.py       # Query routing & synthesis
+│   │   └── rag_agent.py          # RAG system implementation
+│   │
+│   ├── shared/                    # Shared utilities
+│   │   ├── models.py             # SQLAlchemy database models
+│   │   ├── database.py           # Async DB setup
+│   │   ├── job_manager.py        # Redis-based job tracking
+│   │   ├── api_types.py          # Pydantic request/response models
+│   │   ├── tools.py              # Shared tool definitions
+│   │   ├── utils.py              # Helper functions
+│   │   └── aws_client.py         # S3 export utilities
+│   │
+│   ├── tests/                     # Test files
+│   └── docker-compose.yml         # Multi-service orchestration
 │
-├── data_agents/
-│   ├── agents_collection.py        # All 7 agents + orchestration
-│   ├── rag_agent.py               # RAG pipeline class
-│   └── tools.py                   # Pydantic schemas for agents
+├── lumina-frontend-async/         # React frontend
+│   ├── src/
+│   │   ├── App.tsx               # Main app, phase orchestration
+│   │   ├── components/           # Reusable UI components
+│   │   ├── phases/               # Phase-specific views
+│   │   ├── store/                # Zustand global state
+│   │   ├── types/                # TypeScript definitions
+│   │   └── utils/                # API client, job manager
+│   │
+│   ├── package.json
+│   └── Dockerfile                # Nginx production build
 │
-├── prompts/                        # Agent system prompts
-│   ├── schema_agent.txt
-│   ├── pydantic_code_agent.txt
-│   ├── extraction_prompt_agent.txt
-│   └── answer_synthesizer.txt
-│
-├── converted_markdown/             # Cached converted documents
-│   ├── paper1.md
-│   └── data.md
-│
-├── exports/                        # CSV/JSON exports
-│   └── lumina_export_20250104.csv
-│
-├── tests/
-│   ├── test_api.py
-│   ├── test_agents.py
-│   └── fixtures/
-│
-├── requirements.txt
-├── .env                           # API keys (not committed)
-├── README.md
-└── DEPLOYMENT-GUIDE.md
+├── scripts/                       # Deployment scripts
+├── manage-lumina.sh              # Main deployment orchestration
+├── .env                          # API keys (not committed)
+└── README.md
 ```
+
+### Key Architecture Changes
+
+**Modular Agent Package**: The AI agents have been refactored from monolithic files into a clean, modular package structure (`lumina_agents/`):
+
+- **Before**: Two large files (`agents_collection.py` ~950 lines, `rag_agent.py` ~800 lines) with mixed concerns
+- **After**: Seven focused modules with clear separation of concerns
+
+**Benefits**:
+- ✅ Easier to locate and modify specific agent functionality
+- ✅ Better code organization and maintainability
+- ✅ Cleaner imports and exports
+- ✅ Production-ready with proper type hints and docstrings
+- ✅ No duplicate code or commented-out sections
 
 ---
 
