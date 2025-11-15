@@ -53,18 +53,23 @@ configure_aws() {
         exit 1
     fi
     
-    # Configure AWS CLI with credentials
-    aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-    aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-    aws configure set default.region "$AWS_DEFAULT_REGION"
+    # Export credentials as environment variables (more reliable than aws configure)
+    export AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY
+    export AWS_DEFAULT_REGION
     
     # Set session token if provided (for Vocareum lab)
     if [ ! -z "$AWS_SESSION_TOKEN" ]; then
-        aws configure set aws_session_token "$AWS_SESSION_TOKEN"
+        export AWS_SESSION_TOKEN
         echo -e "${GREEN}✅ AWS session token configured${NC}"
     fi
     
-    # Test AWS connection
+    # Also configure AWS CLI for persistence
+    aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" 2>/dev/null || true
+    aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" 2>/dev/null || true
+    aws configure set default.region "$AWS_DEFAULT_REGION" 2>/dev/null || true
+    
+    # Test AWS connection (non-blocking)
     echo -e "${YELLOW}🧪 Testing AWS connection...${NC}"
     if aws sts get-caller-identity > /dev/null 2>&1; then
         ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
@@ -73,9 +78,19 @@ configure_aws() {
         echo -e "${BLUE}   Account ID: $ACCOUNT_ID${NC}"
         echo -e "${BLUE}   User: $USER_ARN${NC}"
     else
-        echo -e "${RED}❌ AWS connection failed${NC}"
-        echo -e "${YELLOW}Please check your AWS credentials in .env file${NC}"
-        exit 1
+        echo -e "${YELLOW}⚠️  AWS connection test failed${NC}"
+        echo -e "${YELLOW}💡 This is OK if:${NC}"
+        echo -e "${YELLOW}   - You're using Vocareum credentials (they may be expired)${NC}"
+        echo -e "${YELLOW}   - You'll refresh credentials before deploying${NC}"
+        echo -e "${YELLOW}   - You're setting up offline${NC}"
+        echo
+        echo -e "${BLUE}🔍 Credentials saved to .env:${NC}"
+        echo -e "${BLUE}   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:0:10}...${NC}"
+        echo -e "${BLUE}   AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION${NC}"
+        echo -e "${BLUE}   Session token: $([ -n "$AWS_SESSION_TOKEN" ] && echo "Set" || echo "Not set")${NC}"
+        echo
+        echo -e "${YELLOW}⚡ You can continue with setup. Test again later with:${NC}"
+        echo -e "${YELLOW}   ./setup-environment.sh validate${NC}"
     fi
 }
 

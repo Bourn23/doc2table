@@ -92,12 +92,18 @@ fi
 
 echo
 
-# Test AWS connection if credentials are set
+# Test AWS connection if credentials are set (non-blocking)
 if [ $ERRORS -eq 0 ]; then
     echo -e "${BLUE}🧪 Testing AWS Connection${NC}"
     echo -e "${BLUE}=========================${NC}"
     
     if command -v aws &> /dev/null; then
+        # Export credentials for the test
+        export AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY
+        export AWS_DEFAULT_REGION
+        [ -n "$AWS_SESSION_TOKEN" ] && export AWS_SESSION_TOKEN
+        
         if aws sts get-caller-identity > /dev/null 2>&1; then
             ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
             USER_ARN=$(aws sts get-caller-identity --query Arn --output text)
@@ -105,9 +111,10 @@ if [ $ERRORS -eq 0 ]; then
             echo -e "${BLUE}   Account ID: $ACCOUNT_ID${NC}"
             echo -e "${BLUE}   User: $USER_ARN${NC}"
         else
-            echo -e "${RED}❌ AWS connection failed${NC}"
-            echo -e "${YELLOW}   Your credentials may be invalid or expired${NC}"
-            ((ERRORS++))
+            echo -e "${YELLOW}⚠️  AWS connection test failed${NC}"
+            echo -e "${YELLOW}   This is OK if credentials are expired or for offline setup${NC}"
+            echo -e "${YELLOW}   Credentials are saved and can be refreshed later${NC}"
+            ((WARNINGS++))
         fi
     else
         echo -e "${YELLOW}⚠️  AWS CLI not installed, skipping connection test${NC}"
