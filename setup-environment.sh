@@ -83,6 +83,7 @@ configure_aws() {
         echo -e "${YELLOW}   - You're using Vocareum credentials (they may be expired)${NC}"
         echo -e "${YELLOW}   - You'll refresh credentials before deploying${NC}"
         echo -e "${YELLOW}   - You're setting up offline${NC}"
+        echo -e "${YELLOW}   - Run ./debug-aws-connection.sh for detailed diagnosis${NC}"
         echo
         echo -e "${BLUE}🔍 Credentials saved to .env:${NC}"
         echo -e "${BLUE}   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:0:10}...${NC}"
@@ -222,10 +223,10 @@ generate_setup_summary() {
     echo -e "   ./manage-lumina.sh        - Manage and deploy complete stack"
     
     echo -e "${BLUE}💰 Estimated Costs:${NC}"
-    echo -e "   EKS Cluster: ~$36/day"
-    echo -e "   EC2 Backend: ~$36/day"
-    echo -e "   Storage & Transfer: ~$5/day"
-    echo -e "   Total: ~$77/day"
+    echo -e "   EKS Cluster: ~\$36/day"
+    echo -e "   EC2 Backend: ~\$36/day"
+    echo -e "   Storage & Transfer: ~\$5/day"
+    echo -e "   Total: ~\$77/day"
     
     # Save setup info
     cat > setup-info.json << EOF
