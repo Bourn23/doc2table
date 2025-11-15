@@ -236,28 +236,23 @@ interactive_setup() {
     echo -e "${BLUE}========================${NC}"
     echo
     
-    # NGC API Key
+    # NGC API Key (also used as NVIDIA API Key)
     if [ -z "$NGC_CLI_API_KEY" ] || [ "$NGC_CLI_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
-        echo -e "${YELLOW}📝 NVIDIA NGC API Key${NC}"
+        echo -e "${YELLOW}📝 NVIDIA API Key${NC}"
         echo -e "${BLUE}   Get from: https://catalog.ngc.nvidia.com/${NC}"
-        read -p "   NGC API Key: " ngc_key
+        echo -e "${BLUE}   💡 This key will be used for both NIM deployment and backend services${NC}"
+        read -p "   NVIDIA API Key: " ngc_key
+        
+        # Set both NGC_CLI_API_KEY and NVIDIA_API_KEY to the same value
         sed -i.bak "s/NGC_CLI_API_KEY=.*/NGC_CLI_API_KEY=$ngc_key/" .env
+        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$ngc_key/" .env
+        
+        echo -e "${GREEN}   ✅ Set as both NGC_CLI_API_KEY and NVIDIA_API_KEY${NC}"
         echo
-    fi
-    
-    # NVIDIA API Key for backend
-    if [ -z "$NVIDIA_API_KEY" ] || [ "$NVIDIA_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
-        echo -e "${YELLOW}📝 NVIDIA API Key (for embeddings, reranking, LLM)${NC}"
-        echo -e "${BLUE}   Get from: https://catalog.ngc.nvidia.com/${NC}"
-        echo -e "${BLUE}   💡 You can use the same key as NGC_CLI_API_KEY${NC}"
-        read -p "   NVIDIA API Key [press Enter to use NGC key]: " nvidia_key
-        
-        # Use NGC key if not provided
-        if [ -z "$nvidia_key" ]; then
-            nvidia_key=$ngc_key
-        fi
-        
-        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$nvidia_key/" .env
+    elif [ -z "$NVIDIA_API_KEY" ] || [ "$NVIDIA_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
+        # NGC key is set but NVIDIA_API_KEY is not - copy it over
+        echo -e "${BLUE}📋 Using NGC_CLI_API_KEY as NVIDIA_API_KEY${NC}"
+        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$NGC_CLI_API_KEY/" .env
         echo
     fi
     
