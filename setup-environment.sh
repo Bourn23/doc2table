@@ -219,9 +219,7 @@ generate_setup_summary() {
     echo -e "   Instance Type: $INSTANCE_TYPE"
     
     echo -e "${BLUE}🎯 Ready for Deployment:${NC}"
-    echo -e "   ./deploy-lumina.sh        - Deploy complete stack"
-    echo -e "   ./deploy-model.sh         - Deploy NIM models only"
-    echo -e "   ./deploy-backend.sh       - Deploy backend only"
+    echo -e "   ./manage-lumina.sh        - Manage and deploy complete stack"
     
     echo -e "${BLUE}💰 Estimated Costs:${NC}"
     echo -e "   EKS Cluster: ~$36/day"
