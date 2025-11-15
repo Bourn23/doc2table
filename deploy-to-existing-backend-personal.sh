@@ -169,7 +169,33 @@ EOF
 
 # Create environment file for personal AWS
 create_env_file_personal() {
-    cat > .env.personal << 'EOF'
+    # Load API keys from root .env file if it exists
+    if [ -f ".env" ]; then
+        echo -e "${BLUE}📋 Loading API keys from .env file...${NC}"
+        source .env
+        
+        # Check if required keys are set
+        if [ -z "$NVIDIA_API_KEY" ] || [ "$NVIDIA_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
+            echo -e "${RED}❌ NVIDIA_API_KEY not set in .env file${NC}"
+            echo -e "${YELLOW}💡 Please run: ./setup-environment.sh${NC}"
+            exit 1
+        fi
+        
+        if [ -z "$GOOGLE_GEMINI_API_KEY" ] || [ "$GOOGLE_GEMINI_API_KEY" = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ]; then
+            echo -e "${RED}❌ GOOGLE_GEMINI_API_KEY not set in .env file${NC}"
+            echo -e "${YELLOW}💡 Please run: ./setup-environment.sh${NC}"
+            exit 1
+        fi
+        
+        echo -e "${GREEN}✅ API keys loaded from .env${NC}"
+    else
+        echo -e "${RED}❌ .env file not found${NC}"
+        echo -e "${YELLOW}💡 Please run: ./setup-environment.sh first${NC}"
+        exit 1
+    fi
+    
+    # Create .env.personal with values from root .env
+    cat > .env.personal << EOF
 # Database Configuration
 POSTGRES_PASSWORD=lumina_postgres_password_2025
 DATABASE_URL=postgresql+asyncpg://lumina:lumina_postgres_password_2025@postgres:5432/lumina_db
@@ -183,27 +209,25 @@ QUERY_SERVICE_URL=http://query-service:8002
 PYTHONPATH=/app
 EXPORTS_BUCKET_NAME=lumina-exports-bucket
 
-# LLM Configurations
-# Set your single, primary NVIDIA API key here
-NVIDIA_API_KEY="YOUR-NVIDIA-API-KEY-HERE"
-
-# These variables will re-use the key from above
+# LLM Configurations (loaded from root .env)
+NVIDIA_API_KEY=$NVIDIA_API_KEY
 NVIDIA_EMBED_API_KEY=$NVIDIA_API_KEY
 NVIDIA_RERANK_API_KEY=$NVIDIA_API_KEY
 NVIDIA_NIM_API_KEY=$NVIDIA_API_KEY
 
-# Your Google Gemini API Key
-GOOGLE_GEMINI_API_KEY="YOUR-GOOGLE-API-KEY-HERE"
+# Google Gemini API Key (loaded from root .env)
+GOOGLE_GEMINI_API_KEY=$GOOGLE_GEMINI_API_KEY
 
 # LLM Models
 GRAPH_LLM_MODEL="nvidia/llama-3.1-nemotron-nano-8b-v1"
-
 
 # Neo4j Configuration (optional)
 NEO4J_URL=neo4j://127.0.0.1:7687
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_neo4j_password
 EOF
+    
+    echo -e "${GREEN}✅ Created .env.personal with API keys from root .env${NC}"
 }
 
 # Deploy to instance

@@ -234,30 +234,67 @@ EOF
 interactive_setup() {
     echo -e "${BLUE}🎯 Interactive Setup Mode${NC}"
     echo -e "${BLUE}========================${NC}"
+    echo
     
     # NGC API Key
-    if [ -z "$NGC_CLI_API_KEY" ]; then
-        echo -e "${YELLOW}Please enter your NVIDIA NGC API Key:${NC}"
-        read -p "NGC API Key: " ngc_key
+    if [ -z "$NGC_CLI_API_KEY" ] || [ "$NGC_CLI_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
+        echo -e "${YELLOW}📝 NVIDIA NGC API Key${NC}"
+        echo -e "${BLUE}   Get from: https://catalog.ngc.nvidia.com/${NC}"
+        read -p "   NGC API Key: " ngc_key
         sed -i.bak "s/NGC_CLI_API_KEY=.*/NGC_CLI_API_KEY=$ngc_key/" .env
+        echo
+    fi
+    
+    # NVIDIA API Key for backend
+    if [ -z "$NVIDIA_API_KEY" ] || [ "$NVIDIA_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
+        echo -e "${YELLOW}📝 NVIDIA API Key (for embeddings, reranking, LLM)${NC}"
+        echo -e "${BLUE}   Get from: https://catalog.ngc.nvidia.com/${NC}"
+        echo -e "${BLUE}   💡 You can use the same key as NGC_CLI_API_KEY${NC}"
+        read -p "   NVIDIA API Key [press Enter to use NGC key]: " nvidia_key
+        
+        # Use NGC key if not provided
+        if [ -z "$nvidia_key" ]; then
+            nvidia_key=$ngc_key
+        fi
+        
+        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$nvidia_key/" .env
+        echo
+    fi
+    
+    # Google Gemini API Key
+    if [ -z "$GOOGLE_GEMINI_API_KEY" ] || [ "$GOOGLE_GEMINI_API_KEY" = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ]; then
+        echo -e "${YELLOW}📝 Google Gemini API Key (for extraction)${NC}"
+        echo -e "${BLUE}   Get from: https://makersuite.google.com/app/apikey${NC}"
+        read -p "   Gemini API Key: " gemini_key
+        sed -i.bak "s/GOOGLE_GEMINI_API_KEY=.*/GOOGLE_GEMINI_API_KEY=$gemini_key/" .env
+        echo
     fi
     
     # AWS Credentials
     if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-        echo -e "${YELLOW}Please enter your AWS credentials from Vocareum lab:${NC}"
-        read -p "AWS Access Key ID: " aws_key_id
-        read -p "AWS Secret Access Key: " aws_secret_key
-        read -p "AWS Session Token: " aws_session_token
-        read -p "AWS Region [us-east-1]: " aws_region
+        echo -e "${YELLOW}📝 AWS Credentials${NC}"
+        echo -e "${BLUE}   Get from your AWS account or Vocareum lab${NC}"
+        read -p "   AWS Access Key ID: " aws_key_id
+        read -p "   AWS Secret Access Key: " aws_secret_key
+        read -p "   AWS Session Token (optional, press Enter to skip): " aws_session_token
+        read -p "   AWS Region [us-east-1]: " aws_region
         aws_region=${aws_region:-us-east-1}
         
         sed -i.bak "s/AWS_ACCESS_KEY_ID=.*/AWS_ACCESS_KEY_ID=$aws_key_id/" .env
         sed -i.bak "s/AWS_SECRET_ACCESS_KEY=.*/AWS_SECRET_ACCESS_KEY=$aws_secret_key/" .env
-        sed -i.bak "s/AWS_SESSION_TOKEN=.*/AWS_SESSION_TOKEN=$aws_session_token/" .env
+        
+        if [ ! -z "$aws_session_token" ]; then
+            sed -i.bak "s/AWS_SESSION_TOKEN=.*/AWS_SESSION_TOKEN=$aws_session_token/" .env
+        fi
+        
         sed -i.bak "s/AWS_DEFAULT_REGION=.*/AWS_DEFAULT_REGION=$aws_region/" .env
+        echo
     fi
     
     echo -e "${GREEN}✅ Interactive setup completed${NC}"
+    echo -e "${BLUE}💾 All credentials saved to .env file${NC}"
+    echo
+    echo -e "${YELLOW}💡 Run './validate-setup.sh' to verify your configuration${NC}"
 }
 
 # Main execution
@@ -278,6 +315,8 @@ main() {
             configure_aws
             validate_ngc_key
             check_vocareum_limits
+            echo
+            echo -e "${BLUE}💡 For detailed validation, run: ./validate-setup.sh${NC}"
             ;;
         *)
             if setup_env_file; then
