@@ -244,15 +244,16 @@ interactive_setup() {
         read -p "   NVIDIA API Key: " ngc_key
         
         # Set both NGC_CLI_API_KEY and NVIDIA_API_KEY to the same value
-        sed -i.bak "s/NGC_CLI_API_KEY=.*/NGC_CLI_API_KEY=$ngc_key/" .env
-        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$ngc_key/" .env
+        # Use | as delimiter to avoid issues with special characters
+        sed -i.bak "s|NGC_CLI_API_KEY=.*|NGC_CLI_API_KEY=$ngc_key|" .env
+        sed -i.bak "s|NVIDIA_API_KEY=.*|NVIDIA_API_KEY=$ngc_key|" .env
         
         echo -e "${GREEN}   ✅ Set as both NGC_CLI_API_KEY and NVIDIA_API_KEY${NC}"
         echo
     elif [ -z "$NVIDIA_API_KEY" ] || [ "$NVIDIA_API_KEY" = "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ]; then
         # NGC key is set but NVIDIA_API_KEY is not - copy it over
         echo -e "${BLUE}📋 Using NGC_CLI_API_KEY as NVIDIA_API_KEY${NC}"
-        sed -i.bak "s/NVIDIA_API_KEY=.*/NVIDIA_API_KEY=$NGC_CLI_API_KEY/" .env
+        sed -i.bak "s|NVIDIA_API_KEY=.*|NVIDIA_API_KEY=$NGC_CLI_API_KEY|" .env
         echo
     fi
     
@@ -261,7 +262,7 @@ interactive_setup() {
         echo -e "${YELLOW}📝 Google Gemini API Key (for extraction)${NC}"
         echo -e "${BLUE}   Get from: https://makersuite.google.com/app/apikey${NC}"
         read -p "   Gemini API Key: " gemini_key
-        sed -i.bak "s/GOOGLE_GEMINI_API_KEY=.*/GOOGLE_GEMINI_API_KEY=$gemini_key/" .env
+        sed -i.bak "s|GOOGLE_GEMINI_API_KEY=.*|GOOGLE_GEMINI_API_KEY=$gemini_key|" .env
         echo
     fi
     
@@ -275,14 +276,15 @@ interactive_setup() {
         read -p "   AWS Region [us-east-1]: " aws_region
         aws_region=${aws_region:-us-east-1}
         
-        sed -i.bak "s/AWS_ACCESS_KEY_ID=.*/AWS_ACCESS_KEY_ID=$aws_key_id/" .env
-        sed -i.bak "s/AWS_SECRET_ACCESS_KEY=.*/AWS_SECRET_ACCESS_KEY=$aws_secret_key/" .env
+        # Use | as delimiter to avoid issues with / in AWS keys
+        sed -i.bak "s|AWS_ACCESS_KEY_ID=.*|AWS_ACCESS_KEY_ID=$aws_key_id|" .env
+        sed -i.bak "s|AWS_SECRET_ACCESS_KEY=.*|AWS_SECRET_ACCESS_KEY=$aws_secret_key|" .env
         
         if [ ! -z "$aws_session_token" ]; then
-            sed -i.bak "s/AWS_SESSION_TOKEN=.*/AWS_SESSION_TOKEN=$aws_session_token/" .env
+            sed -i.bak "s|AWS_SESSION_TOKEN=.*|AWS_SESSION_TOKEN=$aws_session_token|" .env
         fi
         
-        sed -i.bak "s/AWS_DEFAULT_REGION=.*/AWS_DEFAULT_REGION=$aws_region/" .env
+        sed -i.bak "s|AWS_DEFAULT_REGION=.*|AWS_DEFAULT_REGION=$aws_region|" .env
         echo
     fi
     
