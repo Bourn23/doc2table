@@ -294,11 +294,15 @@ main() {
     
     echo -e "${GREEN}🎉 Deployment to personal AWS instance completed!${NC}"
     echo -e "${BLUE}📋 Backend endpoint: http://$PUBLIC_IP:8000${NC}"
-    echo -e "${YELLOW}💡 Important: Your build has failed because you need to update your .env file with your API keys:${NC}"
-    echo -e "   - NVIDIA_API_KEY (for Router, LLM functionality)"
-    echo -e "   - GOOGLE_GEMINI_API_KEY (for extraction LLM functionality)"
-    echo -e "${YELLOW}💡 To update the .env file, open a new terminal and SSH to instance: ssh -i ${KEY_NAME}.pem ec2-user@$PUBLIC_IP${NC}"
+    echo -e "${GREEN}✅ API keys automatically configured from root .env file${NC}"
+    echo
+    echo -e "${YELLOW}💡 Next steps:${NC}"
+    echo -e "   1. Wait 2-3 minutes for services to fully start"
+    echo -e "   2. Test: curl http://$PUBLIC_IP:8000/"
+    echo -e "   3. Deploy frontend: ./manage-lumina.sh → Option 3"
+    echo
     echo -e "${YELLOW}💰 Remember to stop the instance when not in use to save costs${NC}"
+    echo -e "   ./manage-lumina.sh → Option 5: Pause System"
 }
 
 main
