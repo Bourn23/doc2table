@@ -173,7 +173,7 @@ Answer: "TiO2 was synthesized at 350.0°C (paper_1.pdf:record_0)" ✅
 
 ### Embedding & Retrieval
 - **NVIDIA NIM Embedder**: `llama-3.2-nemoretriever-300m-embed-v1`
-  - 1024-dimensional embeddings
+  - 2048-dimensional embeddings
   - Separate encoding for queries vs passages
   - OpenAI-compatible API
 
@@ -185,11 +185,14 @@ Answer: "TiO2 was synthesized at 350.0°C (paper_1.pdf:record_0)" ✅
   - REST API with requests Session
 
 ### Generation
-- **NVIDIA llama 3.1 Nemotron 8B**: Primary LLM
-  - Schema generation, extraction, answer synthesis
+- **Gemini 2.5 Flash**: Primary LLM for extraction
+   - PyDantic schema generation, extraction
+- **NVIDIA llama 3.1 Nemotron 8B**: Primary LLM for query
+  - Query router agent
+  - Answer synthesis and Knowledge graph generation
   - Structured output with Pydantic models
   - Context window: 1M tokens
-- **Ollama (Optional)**: Local model support
+- **Ollama (Optional)**: Local model support (coming soon)
   - Qwen 3 0.6B for lightweight extraction
   - Self-hosted alternative to cloud APIs
 
@@ -215,7 +218,6 @@ Answer: "TiO2 was synthesized at 350.0°C (paper_1.pdf:record_0)" ✅
 - **LangChain**: Document → Graph transformation
   - Entity extraction from text
   - Relationship inference
-  - Temporal metadata tracking
 
 ---
 
@@ -307,21 +309,12 @@ Before deploying Lumina, ensure you have:
 
 1. **AWS Account** with credentials ready
 2. **API Keys**:
-   - NVIDIA API Key ([Get it here](https://catalog.ngc.nvidia.com/))
-   - Google Gemini API Key ([Get it here](https://makersuite.google.com/app/apikey))
+   - NVIDIA API Key ([Get it here](https://build.nvidia.com/settings/api-keys))
+   - Google Gemini API Key ([Get it here](https://aistudio.google.com/api-keys))
 3. **Local Tools**:
-   - Node.js 18+ (for frontend)
+   - Node.js 24+ (for frontend)
    - Docker (optional, for local testing)
    - SSH key pair for EC2 (or let the script create one)
-
-### Deployment Checklist
-
-Before you start, make sure you have:
-
-- [ ] AWS credentials (Access Key ID, Secret Access Key)
-- [ ] NVIDIA API key ([Get it here](https://catalog.ngc.nvidia.com/))
-- [ ] Google Gemini API key ([Get it here](https://makersuite.google.com/app/apikey))
-- [ ] Node.js 18+ installed locally
 
 ### Quick Start (5 Minutes)
 
@@ -349,8 +342,8 @@ Before deploying, configure your credentials:
 ```
 
 This will prompt you for:
-- **NVIDIA API Key** - Get from [NVIDIA NGC](https://catalog.ngc.nvidia.com/) (used for both NIM and backend services)
-- **Google Gemini API Key** - Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- **NVIDIA API Key** - Get from [NVIDIA NGC](https://build.nvidia.com/settings/api-keys) (used for both RAG and KG (Knowledge Graph) services)
+- **Google Gemini API Key** - Get from [Google AI Studio](https://aistudio.google.com/api-keys) (used for extraction)
 - **AWS Credentials** - Access Key ID, Secret Access Key, Region
 
 All credentials are saved to a `.env` file and automatically used by deployment scripts.
@@ -382,7 +375,7 @@ All credentials are saved to a `.env` file and automatically used by deployment 
 2. **Choose to build the frontend** when prompted
    - The script will automatically configure the correct backend URL
    - Build the frontend (takes 1-2 minutes)
-   - Deploy to S3
+   - Deploy to S3 (recommended)
 
 3. **Access Your Application**:
    - The script will show you the frontend URL
