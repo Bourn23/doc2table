@@ -21,10 +21,11 @@ Get Lumina running in 5 minutes:
 ```bash
 # 1. Clone the repository
 git clone https://github.com/Bourn23/doc2table.git
-cd lumina
+cd doc2table
 
-# 2. Configure AWS CLI with your credentials
-aws configure
+# 2. Setup environment and credentials (one-time setup)
+chmod +x setup-environment.sh
+./setup-environment.sh interactive
 
 # 3. Run the deployment script
 chmod +x manage-lumina.sh
@@ -32,7 +33,6 @@ chmod +x manage-lumina.sh
 
 # 4. Select Option 2: Deploy Backend
 # 5. Select Option 3: Deploy Frontend
-# 6. Add your API keys (see Deployment Guide below) or fire up your own LLM models on EKS
 ```
 
 **That's it!** Your Lumina instance will be live at the S3 URL shown by the script.
@@ -305,38 +305,55 @@ lumina/
 
 Before deploying Lumina, ensure you have:
 
-1. **AWS Account** with CLI configured (`aws configure`)
+1. **AWS Account** with credentials ready
 2. **API Keys**:
-   - NVIDIA API Key (for embeddings, reranking, and LLM)
-   - Google Gemini API Key (for extraction LLM)
+   - NVIDIA API Key ([Get it here](https://catalog.ngc.nvidia.com/))
+   - Google Gemini API Key ([Get it here](https://makersuite.google.com/app/apikey))
 3. **Local Tools**:
    - Node.js 18+ (for frontend)
-   - Docker (installed on your machine for testing)
-   - SSH key pair for EC2 access
+   - Docker (optional, for local testing)
+   - SSH key pair for EC2 (or let the script create one)
 
 ### Deployment Checklist
 
 Before you start, make sure you have:
 
-- [ ] AWS account with CLI configured (`aws configure`)
+- [ ] AWS credentials (Access Key ID, Secret Access Key)
 - [ ] NVIDIA API key ([Get it here](https://catalog.ngc.nvidia.com/))
 - [ ] Google Gemini API key ([Get it here](https://makersuite.google.com/app/apikey))
 - [ ] Node.js 18+ installed locally
-- [ ] SSH key pair for EC2 (or let the script create one)
 
 ### Quick Start (5 Minutes)
 
-The easiest way to deploy Lumina is using the interactive management script:
+The easiest way to deploy Lumina is using the setup and management scripts:
 
 ```bash
-# Make the script executable
-chmod +x manage-lumina.sh
+# Step 1: Setup environment (one-time)
+chmod +x setup-environment.sh
+./setup-environment.sh interactive
 
-# Run the interactive menu
+# Step 2: Run the deployment manager
+chmod +x manage-lumina.sh
 ./manage-lumina.sh
 ```
 
 ### Step-by-Step Deployment
+
+#### Step 0: Setup Environment (One-Time)
+
+Before deploying, configure your credentials:
+
+```bash
+# Run the interactive setup
+./setup-environment.sh interactive
+```
+
+This will prompt you for:
+- **NVIDIA API Key** - Get from [NVIDIA NGC](https://catalog.ngc.nvidia.com/) (used for both NIM and backend services)
+- **Google Gemini API Key** - Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- **AWS Credentials** - Access Key ID, Secret Access Key, Region
+
+All credentials are saved to a `.env` file and automatically used by deployment scripts.
 
 #### Step 1: Deploy Backend to AWS EC2
 
@@ -349,38 +366,9 @@ chmod +x manage-lumina.sh
    - This will create a t3.medium EC2 instance (~$30/month)
    - Wait for the instance to be created (2-3 minutes)
    - When prompted, choose to deploy the application
+   - **API keys from your .env file are automatically configured!**
 
-3. **Configure API Keys**:
-   
-   After deployment, you need to add your API keys. You have two options:
-
-   **Option A: Edit the .env file on the EC2 instance (Recommended)**
-   ```bash
-   # SSH into your instance (the script will show you the command)
-   ssh -i <your-key>.pem ec2-user@<your-public-ip>
-   
-   # Edit the .env file
-   nano .env
-   
-   # Update these lines with your actual API keys:
-   NVIDIA_API_KEY="your-nvidia-api-key-here"
-   GOOGLE_GEMINI_API_KEY="your-google-api-key-here"
-   
-   # Save and exit (Ctrl+X, then Y, then Enter)
-   
-   # Restart the services
-   docker compose -f docker-compose-backend.yml restart
-   ```
-
-   **Option B: Edit the deployment script before deploying**
-   
-   Open `deploy-to-existing-backend-personal.sh` and find the `create_env_file_personal()` function around line 180. Update these lines:
-   ```bash
-   NVIDIA_API_KEY="your-nvidia-api-key-here"
-   GOOGLE_GEMINI_API_KEY="your-google-api-key-here"
-   ```
-
-4. **Verify Backend is Running**:
+3. **Verify Backend is Running**:
    ```bash
    # From the management script, select Option 10: Test Endpoints
    # Or manually test:
