@@ -49,7 +49,7 @@ chmod +x manage-lumina.sh
 ## 📚 Table of Contents
 
 - [Overview](#-overview)
-- [The Problem](#-the-problem-document-analysis-doesnt-scale)
+- [The Problem](#-the-problem-document-analysis-doesn't-scale)
 - [Our Solution](#-our-solution-agentic-ai-for-document-intelligence)
 - [Key Differentiators](#-key-differentiators)
 - [Core Stack](#-core-stack)
@@ -113,7 +113,7 @@ Unlike single-model AI tools that hallucinate or hit file limits, Lumina uses **
 
 ---
 
-## Our Solution: Agentic AI for Document Intelligence
+## Our Solution Agentic AI for Document Intelligence
 
 Lumina fixes this with **specialized AI agents** that collaborate with you to understand documents, design extraction schemas, extract structured data, and answer questions—all with validation at every step.
 
