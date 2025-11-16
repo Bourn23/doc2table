@@ -406,13 +406,21 @@ Lumina's Approach:
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how:
+We welcome contributions! Lumina is built by researchers, for researchers who are tired of manual data extraction.
+
+### How to Contribute
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
 
 
 
 ## 🌟 Recognition
 
-Built by researchers, for researchers who are tired of manual data extraction.
+Built by researchers, for researchers.
 
 **Core Innovation:**
 - Multi-agent architecture where each agent has a single, focused task
