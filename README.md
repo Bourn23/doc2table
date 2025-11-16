@@ -953,10 +953,6 @@ graph TB
     end
 ```
 
-<div align="center">
-
-**From Chaos to Clarity**: Where multi-agent AI meets document intelligence to extract the knowledge hidden in your papers.
-
 ---
 
 ## 📄 License
