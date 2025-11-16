@@ -520,12 +520,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### For Users
 - **[Quick Start Guide](#-quick-start)** - Get running in 5 minutes
-- **[Deployment Guide](#-deployment-guide)** - Detailed deployment instructions
-- **[Troubleshooting](#troubleshooting)** - Common issues and solutions
+- **[Deployment Guide](DETAILED_DEPLOYMENT_GUIDE.md)** - Detailed deployment instructions
+- **[Troubleshooting](TROUBLESHOOT.md)** - Common issues and solutions
 
 ### For Developers
 - **[Technical Deep Dive](TECHNICAL_DEEP_DIVE.md)** - Architecture, AI integration, and implementation
-- **[Troubleshooting](TROUBLESHOOT.md)** - Different Troubleshooting information
 - **[Project Structure](#️-project-structure)** - Codebase organization
 - **[Contributing](#-contributing)** - How to contribute
 
