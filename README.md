@@ -49,8 +49,8 @@ chmod +x manage-lumina.sh
 ## 📚 Table of Contents
 
 - [Overview](#-overview)
-- [The Problem](#the-problem-with-manual-data-extraction)
-- [Our Solution](#our-solution-agentic-document-intelligence)
+- [The Problem](#-the-problem-document-analysis-doesnt-scale)
+- [Our Solution](#-our-solution-agentic-ai-for-document-intelligence)
 - [Key Differentiators](#-key-differentiators)
 - [Core Stack](#-core-stack)
 - [Features](#-features)
@@ -429,8 +429,9 @@ Built by researchers, for researchers.
 - Markdown caching for fast re-extraction without re-upload
 
 **Key Technologies:**
+- NVIDIA NIM for embedding and reranking and llm generation
+- Amazon AWS for cloud services hosting the NIM models, backend, and frontend, storage
 - OpenAI Agents SDK for agentic coordination
-- NVIDIA NIM for embedding and reranking and high-quality generation
 
 ---
 
