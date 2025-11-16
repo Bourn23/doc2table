@@ -56,28 +56,44 @@ chmod +x manage-lumina.sh
 
 ---
 
+## 📖 Additional Documentation
+
+- **[Technical Deep Dive](TECHNICAL_DEEP_DIVE.md)** - Comprehensive guide to architecture, AI integration, and implementation details
+- **[Hackathon Evaluation](kiro-documentation/hackathon-evaluation/)** - Detailed technical analysis and competitive positioning
+
+---
+
 ## 🎯 Overview
 
 **Lumina** is an **intelligent document processing system** that transforms unstructured documents into queryable, structured knowledge. Built on a **multi-agent AI architecture**, it automatically analyzes your documents, designs optimal extraction schemas, extracts data with precision, and enables natural language querying through advanced RAG (Retrieval-Augmented Generation).
 
-> 🔮 *Lumina combines agent-driven extraction with GPU-accelerated retrieval — making document intelligence automated, precise, and conversational.*
+> 🔮 *Lumina combines makes document intelligence automated, precise, and conversational. And above all, open-sourced.*
 
 ---
 
-## The Problem with Manual Data Extraction
+## The Problem: Document Analysis Doesn't Scale
 
-Today's researchers spend **28% of their time** extracting data from papers. We make it **automatic**.
+**Have you ever needed to analyze dozens of contracts, research papers, or financial reports—only to hit the '10 file upload limit' on every AI tool?**
 
-Traditional data extraction requires you to:
+### Current Reality
+- **Manual data extraction costs U.S. companies $28,500 per employee annually**
+- Researchers spend **28% of their time** manually extracting data from papers
+- Existing AI tools (ChatGPT, Claude) limit you to **10-20 files maximum**
+- Academic tools (SciSpace, Elicit) only work with research papers, not business documents
+- Enterprise solutions (Hebbia, Palantir) cost **$10,000+ per seat annually**
+- **No open-source alternatives** exist that combine scale, validation, and conversational queries
+
+### The Traditional Workflow
 1. **Manually design** schemas for each document type
-2. **Labor intensive** job reading all the documents
-3. **manually extract** data from PDFs into spreadsheets
-3. **Re-read** documents multiple times to answer new questions
-4. **Lose context** when documents don't fit your predefined structure
+2. **Labor-intensive** reading of all documents
+3. **Manually extract** data from PDFs into spreadsheets
+4. **Re-read** documents multiple times to answer new questions
+5. **Lose context** when documents don't fit your predefined structure
 
-This is **slow, error-prone, and doesn't scale** when you have hundreds of papers to analyze.
+**This is slow, error-prone, and doesn't scale** when you have 20+ documents to analyze.
 
-## Our Solution: Agentic Document Intelligence
+
+## Our Solution: Agentic AI for Document Intelligence
 
 We fix this by using **specialized AI agents** that collaborates with the user, understand your documents, design extraction schemas, extract structured data, and answer questions.
 
@@ -97,6 +113,16 @@ Unlike single-model systems (which hallucinate), our **agent pipeline is determi
 
 ![Lumina Workflow](image-1.png)
 ---
+
+**Similar Services:**
+| Feature | Lumina | ChatGPT/Claude | SciSpace/Elicit | Hebbia/Palantir |
+|---------|--------|----------------|-----------------|-----------------|
+| File Limit | Unlimited | 10-20 | Research only | Unlimited |
+| Validation | ✅ Pydantic | ❌ None | ❌ None | ✅ Custom |
+| Open Source | ✅ Yes | ❌ No | ❌ No | ❌ No |
+| Cost | ~$32/mo | $20/mo | $20/mo | $10K+/year |
+| Custom Schema | ✅ Yes | ❌ No | ❌ No | ✅ Yes |
+| Citation | ✅ Yes | ⚠️ Limited | ✅ Yes | ✅ Yes |
 
 ## 🧩 Core Stack
 
@@ -869,6 +895,24 @@ graph TB
 <div align="center">
 
 **From Chaos to Clarity**: Where multi-agent AI meets document intelligence to extract the knowledge hidden in your papers.
+
+---
+
+## 📖 Learn More
+
+### For Users
+- **[Quick Start Guide](#-quick-start)** - Get running in 5 minutes
+- **[Deployment Guide](#-deployment-guide)** - Detailed deployment instructions
+- **[Troubleshooting](#troubleshooting)** - Common issues and solutions
+
+### For Developers
+- **[Technical Deep Dive](TECHNICAL_DEEP_DIVE.md)** - Architecture, AI integration, and implementation
+- **[Project Structure](#️-project-structure)** - Codebase organization
+- **[Contributing](#-contributing)** - How to contribute
+
+### For Evaluators
+- **[Hackathon Evaluation](kiro-documentation/hackathon-evaluation/)** - Technical analysis and scoring
+- **[Competitive Analysis](kiro-documentation/hackathon-evaluation/COMPETITIVE_ANALYSIS.md)** - Market positioning
 
 [⬆ back to top](#-lumina)
 
