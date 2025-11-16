@@ -65,7 +65,7 @@ chmod +x manage-lumina.sh
 ## 📖 Additional Documentation
 
 - **[Technical Deep Dive](TECHNICAL_DEEP_DIVE.md)** - Comprehensive guide to architecture, AI integration, and implementation details
-- **[Hackathon Evaluation](kiro-documentation/hackathon-evaluation/)** - Detailed technical analysis and competitive positioning
+- **[Troubleshooting](TROUBLESHOOT.md)** - Detailed troubleshooting for deployment
 
 ---
 
