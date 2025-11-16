@@ -203,9 +203,6 @@ This prevents wasted extraction and ensures the output matches your needs.
 - ✅ **Markdown Caching** – Converted documents cached for re-use
 - ✅ **Export to CSV** – Download structured data with timestamps
 
-Here's more on Citation-Backed Answers:
-
-
 ---
 
 ### Lumina's Approach:
@@ -302,26 +299,26 @@ Lumina's Approach:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                  Docker Compose                      │
-│                                                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐ │
-│  │ API Gateway  │  │ Extraction   │  │   Query   │ │
-│  │ (Port 8000)  │◄─┤   Service    │◄─┤  Service  │ │
-│  │              │  │ (Port 8001)  │  │(Port 8002)│ │
-│  │ Orchestrates │  │ Schema Gen   │  │ RAG +     │ │
-│  │ all services │  │ + Extraction │  │ Indexing  │ │
-│  └──────┬───────┘  └──────┬───────┘  └─────┬─────┘ │
-│         │                 │                 │        │
-│  ┌──────▼─────────────────▼─────────────────▼────┐  │
-│  │          Shared Volumes (Data Persistence)    │  │
-│  │  • uploaded_files/   • indexes/              │  │
-│  │  • converted_markdown/  • exports/           │  │
-│  └──────────────────────────────────────────────┘  │
-│                                                      │
-│  ┌──────────────┐              ┌────────────────┐  │
-│  │  PostgreSQL  │              │     Redis      │  │
-│  │  (Database)  │              │  (Job Queue)   │  │
-│  └──────────────┘              └────────────────┘  │
+│                  Docker Compose                     │
+│                                                     │
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
+│  │ API Gateway  │  │ Extraction   │  │   Query   │  │
+│  │ (Port 8000)  │◄─┤   Service    │◄─┤  Service  │  │
+│  │              │  │ (Port 8001)  │  │(Port 8002)│  │
+│  │ Orchestrates │  │ Schema Gen   │  │ RAG +     │  │
+│  │ all services │  │ + Extraction │  │ Indexing  │  │
+│  └──────┬───────┘  └──────┬───────┘  └─────┬─────┘  │
+│         │                 │                │        │
+│  ┌──────▼─────────────────▼────────────────▼────┐   │
+│  │          Shared Volumes (Data Persistence)   │   │
+│  │  • uploaded_files/   • indexes/              │   │
+│  │  • converted_markdown/  • exports/           │   │
+│  └──────────────────────────────────────────────┘   │
+│                                                     │
+│  ┌──────────────┐              ┌────────────────┐   │
+│  │  PostgreSQL  │              │     Redis      │   │
+│  │  (Database)  │              │  (Job Queue)   │   │
+│  └──────────────┘              └────────────────┘   │
 └─────────────────────────────────────────────────────┘
                     │                    │
                     ▼                    ▼
