@@ -673,21 +673,21 @@ Common causes:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                         AWS Cloud                            │
-│                                                              │
-│  ┌────────────────────┐         ┌─────────────────────┐    │
-│  │   S3 Bucket        │         │   EC2 Instance      │    │
-│  │   (Frontend)       │         │   (t3.medium)       │    │
-│  │                    │         │                     │    │
-│  │  React App         │────────▶│  Docker Compose:    │    │
-│  │  (Static Files)    │  API    │  - API Service      │    │
-│  │                    │  Calls  │  - Extraction Svc   │    │
-│  └────────────────────┘         │  - Query Service    │    │
-│                                  │  - PostgreSQL       │    │
-│                                  │  - Redis            │    │
-│                                  └─────────────────────┘    │
-│                                           │                  │
-│                                           ▼                  │
+│                         AWS Cloud                           │
+│                                                             │
+│  ┌────────────────────┐         ┌─────────────────────┐     │
+│  │   S3 Bucket        │         │   EC2 Instance      │     │
+│  │   (Frontend)       │         │   (t3.medium)       │     │
+│  │                    │         │                     │     │
+│  │  React App         │────────▶│  Docker Compose:    │     │
+│  │  (Static Files)    │  API    │  - API Service      │     │
+│  │                    │  Calls  │  - Extraction Svc   │     │
+│  └────────────────────┘         │  - Query Service    │     │
+│                                 │  - PostgreSQL       │     │
+│                                 │  - Redis            │     │
+│                                 └─────────────────────┘     │
+│                                           │                 │
+│                                           ▼                 │
 │                                  ┌─────────────────────┐    │
 │                                  │  Shared Volumes:    │    │
 │                                  │  - uploaded_files   │    │
